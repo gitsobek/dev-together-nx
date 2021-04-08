@@ -1,34 +1,31 @@
 {
   "implicitDependencies": {
     "angular.json": "*",
-    "package.json": {
-      "dependencies": "*",
-      "devDependencies": "*"
-    },
+    "package.json": { "dependencies": "*", "devDependencies": "*" },
     "tsconfig.base.json": "*",
     "tslint.json": "*",
     ".eslintrc.json": "*",
     "nx.json": "*"
   },
-  "affected": {
-    "defaultBase": "master"
-  },
+  "affected": { "defaultBase": "master" },
   "npmScope": "dev-together",
   "tasksRunnerOptions": {
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
-      "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
-      }
+      "options": { "cacheableOperations": ["build", "lint", "test", "e2e"] }
     }
   },
   "projects": {
-    "dev-together": {
-      "tags": []
-    },
+    "dev-together": { "tags": [] },
     "dev-together-e2e": {
       "tags": [],
       "implicitDependencies": ["dev-together"]
-    }
+    },
+    "ui-layout": { "tags": [] },
+    "ui-elements": { "tags": [] },
+    "home": { "tags": [] },
+    "auth": { "tags": [] },
+    "forms": { "tags": [] },
+    "router": { "tags": [] }
   }
 }

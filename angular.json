@@ -145,6 +145,156 @@
           }
         }
       }
+    },
+    "ui-layout": {
+      "projectType": "library",
+      "root": "libs/ui-layout",
+      "sourceRoot": "libs/ui-layout/src",
+      "prefix": "dev-together",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/ui-layout/src/**/*.ts",
+              "libs/ui-layout/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/ui-layout"],
+          "options": {
+            "jestConfig": "libs/ui-layout/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "ui-elements": {
+      "projectType": "library",
+      "root": "libs/ui-elements",
+      "sourceRoot": "libs/ui-elements/src",
+      "prefix": "dev-together",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/ui-elements/src/**/*.ts",
+              "libs/ui-elements/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/ui-elements"],
+          "options": {
+            "jestConfig": "libs/ui-elements/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "home": {
+      "projectType": "library",
+      "root": "libs/home",
+      "sourceRoot": "libs/home/src",
+      "prefix": "dev-together",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/home/src/**/*.ts",
+              "libs/home/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/home"],
+          "options": {
+            "jestConfig": "libs/home/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "auth": {
+      "projectType": "library",
+      "root": "libs/auth",
+      "sourceRoot": "libs/auth/src",
+      "prefix": "dev-together",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/auth/src/**/*.ts",
+              "libs/auth/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/auth"],
+          "options": {
+            "jestConfig": "libs/auth/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "forms": {
+      "projectType": "library",
+      "root": "libs/forms",
+      "sourceRoot": "libs/forms/src",
+      "prefix": "dev-together",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/forms/src/**/*.ts",
+              "libs/forms/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/forms"],
+          "options": {
+            "jestConfig": "libs/forms/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "router": {
+      "projectType": "library",
+      "root": "libs/router",
+      "sourceRoot": "libs/router/src",
+      "prefix": "dev-together",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/router/src/**/*.ts",
+              "libs/router/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/router"],
+          "options": {
+            "jestConfig": "libs/router/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }

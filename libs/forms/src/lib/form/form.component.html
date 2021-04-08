@@ -1,0 +1,8 @@
+<form [formGroup]="form" autocomplete="off">
+  <ng-container
+    *ngFor="let field of form$ | async"
+    appCustomField
+    [field]="field"
+    [group]="form"
+  ></ng-container>
+</form>

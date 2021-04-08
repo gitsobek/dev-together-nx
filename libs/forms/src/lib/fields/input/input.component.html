@@ -1,0 +1,7 @@
+<fieldset [formGroup]="group">
+  <input
+    [formControlName]="field?.name"
+    [placeholder]="field?.placeholder"
+    [type]="field?.attrs?.type || 'text'"
+  />
+</fieldset>

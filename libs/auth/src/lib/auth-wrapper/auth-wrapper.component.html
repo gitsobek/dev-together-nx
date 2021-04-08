@@ -1,0 +1,16 @@
+<section>
+  <div>&nbsp;</div>
+  <div>
+    <div class="container">
+      <dev-together-form
+        [data$]="data$"
+        [form$]="form$"
+        (updateForm)="onFormUpdate($event)"
+      >
+      </dev-together-form>
+
+      <ng-content></ng-content>
+    </div>
+  </div>
+  <div>&nbsp;</div>
+</section>

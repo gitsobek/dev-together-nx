@@ -1,0 +1,8 @@
+<fieldset [formGroup]="group" class="form-group">
+    <textarea
+      [rows]="field?.attrs?.rows || 5"
+      [formControlName]="field?.name"
+      [placeholder]="field?.placeholder"
+    >
+    </textarea>
+  </fieldset>
