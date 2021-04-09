@@ -7,5 +7,6 @@ module.exports = {
     '<rootDir>/libs/auth',
     '<rootDir>/libs/forms',
     '<rootDir>/libs/router',
+    '<rootDir>/libs/api',
   ],
 };

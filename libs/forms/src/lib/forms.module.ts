@@ -12,8 +12,8 @@ import {
   formsReducer,
   formsInitialState,
 } from './+state/forms.reducer';
-import { FormsEffects } from './+state/forms.effects';
 import { CustomFieldDirective } from './form/custom-field.directive';
+import { ErrorsComponent } from './errors/errors.component';
 
 @NgModule({
   imports: [
@@ -22,11 +22,11 @@ import { CustomFieldDirective } from './form/custom-field.directive';
     StoreModule.forFeature(formsFeatureKey, formsReducer, {
       initialState: formsInitialState,
     }),
-    EffectsModule.forFeature([FormsEffects])
+    EffectsModule.forFeature([])
   ],
   providers: [FormsFacade],
-  declarations: [FormComponent, CustomFieldDirective, InputComponent, TextareaComponent],
+  declarations: [FormComponent, CustomFieldDirective, InputComponent, TextareaComponent, ErrorsComponent],
   entryComponents: [InputComponent, TextareaComponent],
-  exports: [FormComponent],
+  exports: [FormComponent, ErrorsComponent],
 })
 export class FormsModule {}

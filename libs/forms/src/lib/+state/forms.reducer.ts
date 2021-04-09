@@ -11,9 +11,10 @@ export interface FormsState {
 export const formsInitialState: Form = {
   data: {},
   form: [],
-  valid: true,
+  valid: false,
   errors: {},
   touched: false,
+  submitted: false
 };
 
 const reducer = createReducer(
@@ -24,7 +25,7 @@ const reducer = createReducer(
   })),
   on(FormsActions.updateData, (state, action) => {
     const updatedData = { ...state.data, ...action.data };
-    return { ...state, data: updatedData, touched: true };
+    return { ...state, data: updatedData, touched: true, submitted: false };
   }),
   on(FormsActions.initializeForm, () => formsInitialState),
   on(FormsActions.setForm, (state, action) => ({
@@ -39,7 +40,9 @@ const reducer = createReducer(
     ...state,
     errors: action.errors,
   })),
-  on(FormsActions.resetForm, (state, _) => ({ ...state, touched: false }))
+  on(FormsActions.submitForm, (state, _) => ({ ...state, submitted: true })),
+  on(FormsActions.validateForm, (state, action) => ({ ...state, valid: action.valid })),
+  on(FormsActions.resetForm, (state, _) => ({ ...state, touched: false, submitted: false }))
 );
 
 export function formsReducer(state: Form, action: Action): Form {

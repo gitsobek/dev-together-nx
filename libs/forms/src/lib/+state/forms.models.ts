@@ -6,6 +6,7 @@ export interface Form {
   valid: boolean;
   errors: Errors;
   touched: boolean;
+  submitted: boolean;
 }
 
 export interface Field {
@@ -19,7 +20,7 @@ export interface Field {
 }
 
 export interface Errors {
-  [key: string]: string;
+  [key: string]: string[]
 }
 
 export type FieldType = 'INPUT' | 'TEXTAREA';

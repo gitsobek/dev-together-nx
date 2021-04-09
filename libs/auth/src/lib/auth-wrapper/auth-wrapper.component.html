@@ -9,7 +9,11 @@
       >
       </dev-together-form>
 
-      <ng-content></ng-content>
+      <ng-content select="[paragraph]"></ng-content>
+
+      <dev-together-errors></dev-together-errors>
+
+      <ng-content select="[dev-together-button-retro]"></ng-content>
     </div>
   </div>
   <div>&nbsp;</div>

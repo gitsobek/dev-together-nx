@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { AuthModule } from '@dev-together/auth';
-import { RouterModule } from '@dev-together/router';
+import { NgrxRouterModule } from '@dev-together/router';
 import { UiLayoutModule } from '@dev-together/ui-layout';
 import { UiElementsModule } from '@dev-together/ui-elements';
 import { AppRoutingModule } from './app-routing.module';
@@ -15,14 +15,14 @@ import { environment } from '../environments/environment';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    AuthModule,
+    AuthModule.withConfig({ type: 'local' }),
     AppRoutingModule,
     UiLayoutModule,
     UiElementsModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
-    RouterModule,
-    !environment.production ? StoreDevtoolsModule.instrument() : []
+    NgrxRouterModule,
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
   providers: [],
   bootstrap: [AppComponent],

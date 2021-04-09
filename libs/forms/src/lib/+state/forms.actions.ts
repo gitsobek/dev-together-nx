@@ -10,4 +10,6 @@ export const initializeForm = createAction('[Forms] INITIALIZE_FORM');
 export const setForm = createAction('[Forms] SET_FORM', props<{ form: any }>());
 export const initializeErrors = createAction('[Forms] INITIALIZE_ERRORS');
 export const setErrors = createAction('[Forms] SET_ERRORS', props<{ errors: Errors }>());
+export const submitForm = createAction('[Form] SUBMIT_FORM');
+export const validateForm = createAction('[Form] VALIDATE_FORM', props<{ valid: boolean }>());
 export const resetForm = createAction('[Forms] RESET_FORM');

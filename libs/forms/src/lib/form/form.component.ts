@@ -10,7 +10,14 @@ import {
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { combineLatest, Observable, Subject } from 'rxjs';
 import { debounceTime, map, takeUntil, tap } from 'rxjs/operators';
+import { FormsFacade } from '../+state/forms.facade';
 import { Field } from '../+state/forms.models';
+
+const VALIDATORS: Record<string, string> = {
+  required: 'is required',
+  email: 'has wrong format',
+  minlength: 'needs to have min. $num characters',
+};
 
 @Component({
   selector: 'dev-together-form',
@@ -26,7 +33,7 @@ export class FormComponent implements OnInit, OnDestroy {
   unsubscribe$: Subject<void>;
   form: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private formsFacade: FormsFacade) {
     this.unsubscribe$ = new Subject();
   }
 
@@ -44,10 +51,32 @@ export class FormComponent implements OnInit, OnDestroy {
         tap((f: FormGroup) => this.listenFormChanges(f)),
         (f$) => combineLatest([f$, this.data$])
       )
-      .subscribe(
-        ([form, data]: [FormGroup, any]) =>
-          !!data && form.patchValue(data, { emitEvent: false })
-      );
+      .subscribe(([form, data]: [FormGroup, any]) => {
+        const errors = (<any>Object).fromEntries(
+          Object.entries(form.controls)
+            .map(([key, _]) => [
+              key,
+              Object.keys(form.controls[key].errors || {}).map((v) => {
+                const text = VALIDATORS[v];
+                if (text.includes('$num')) {
+                  return text.replace(
+                    '$num',
+                    form.controls[key]?.errors[v]?.requiredLength || 3
+                  );
+                }
+                return text;
+              }),
+            ])
+            .filter(([, v]) => v.length)
+        );
+
+        this.formsFacade.setErrors(errors);
+        this.formsFacade.validateForm(form.valid);
+
+        !!data
+          ? form.patchValue(data, { emitEvent: false })
+          : form.patchValue({}, { emitEvent: false });
+      });
   }
 
   control = (field: Field): FormControl =>
@@ -60,7 +89,11 @@ export class FormComponent implements OnInit, OnDestroy {
 
   listenFormChanges(form: FormGroup): void {
     form.valueChanges
-      .pipe(debounceTime(50), takeUntil(this.unsubscribe$))
+      .pipe(
+        tap(() => form.touched),
+        debounceTime(50),
+        takeUntil(this.unsubscribe$)
+      )
       .subscribe((changes: any) => this.updateForm.emit(changes));
   }
 }

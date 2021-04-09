@@ -24,4 +24,4 @@ import { routerFeatureKey } from './+state/router.models';
     [{ provide: RouterStateSerializer, useClass: CustomSerializer }],
   ],
 })
-export class RouterModule {}
+export class NgrxRouterModule {}

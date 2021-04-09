@@ -24,6 +24,10 @@ export const isTouched = createSelector(
   formsFeature,
   (state: Form) => state.touched
 );
+export const isSubmitted = createSelector(
+  formsFeature,
+  (state: Form) => state.submitted
+)
 
 export const formsQuery = {
   getData,
@@ -31,4 +35,5 @@ export const formsQuery = {
   isValid,
   getErrors,
   isTouched,
+  isSubmitted
 };

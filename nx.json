@@ -26,6 +26,7 @@
     "home": { "tags": [] },
     "auth": { "tags": [] },
     "forms": { "tags": [] },
-    "router": { "tags": [] }
+    "router": { "tags": [] },
+    "api": { "tags": [] }
   }
 }

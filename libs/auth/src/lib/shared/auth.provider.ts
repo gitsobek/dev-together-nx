@@ -28,19 +28,19 @@ const registerForm: Field[] = [
     type: 'INPUT',
     name: 'username',
     placeholder: 'Username',
-    validator: [Validators.required],
+    validator: [Validators.required, Validators.minLength(3)],
   },
   {
     type: 'INPUT',
     name: 'email',
     placeholder: 'Email',
-    validator: [Validators.required],
+    validator: [Validators.required, Validators.email, Validators.minLength(3)],
   },
   {
     type: 'INPUT',
     name: 'password',
     placeholder: 'Password',
-    validator: [Validators.required],
+    validator: [Validators.required, Validators.minLength(6)],
     attrs: {
       type: 'password',
     },

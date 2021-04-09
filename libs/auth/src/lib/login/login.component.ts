@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, HostBinding } from '@angular/core';
+import { AuthFacade } from '../+state/auth.facade';
 
 @Component({
   selector: 'dev-together-login',
@@ -9,7 +10,9 @@ import { ChangeDetectionStrategy, Component, HostBinding } from '@angular/core';
 export class LoginComponent {
   @HostBinding('class.auth-content') authStyling: boolean = true;
 
+  constructor(private authFacade: AuthFacade) {}
+
   submit(): void {
-    console.log('login');
+    this.authFacade.login();
   }
 }

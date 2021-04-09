@@ -15,12 +15,14 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@env/*": ["apps/dev-together/src/environments/*"],
       "@dev-together/ui-layout": ["libs/ui-layout/src/index.ts"],
       "@dev-together/ui-elements": ["libs/ui-elements/src/index.ts"],
       "@dev-together/home": ["libs/home/src/index.ts"],
       "@dev-together/auth": ["libs/auth/src/index.ts"],
       "@dev-together/forms": ["libs/forms/src/index.ts"],
-      "@dev-together/router": ["libs/router/src/index.ts"]
+      "@dev-together/router": ["libs/router/src/index.ts"],
+      "@dev-together/api": ["libs/api/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
