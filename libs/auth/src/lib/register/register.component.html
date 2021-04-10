@@ -6,6 +6,7 @@
     text="Register"
     insideColor="#f04f65"
     hoverColor="#2acdc1"
+    [loading]="status$ | async"
     (click)="submit()"
   ></button>
 </dev-together-auth-wrapper>

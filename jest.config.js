@@ -8,5 +8,6 @@ module.exports = {
     '<rootDir>/libs/forms',
     '<rootDir>/libs/router',
     '<rootDir>/libs/api',
+    '<rootDir>/libs/ui-components',
   ],
 };

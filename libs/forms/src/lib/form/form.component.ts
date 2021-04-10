@@ -89,11 +89,7 @@ export class FormComponent implements OnInit, OnDestroy {
 
   listenFormChanges(form: FormGroup): void {
     form.valueChanges
-      .pipe(
-        tap(() => form.touched),
-        debounceTime(50),
-        takeUntil(this.unsubscribe$)
-      )
+      .pipe(debounceTime(50), takeUntil(this.unsubscribe$))
       .subscribe((changes: any) => this.updateForm.emit(changes));
   }
 }

@@ -16,5 +16,8 @@ export const register = createAction('[Auth] REGISTER');
 export const registerSuccess = createAction('[Auth] REGISTER_SUCCESS', props<{ user: User }>());
 export const registerError = createAction('[Auth] REGISTER_ERROR');
 
+/* -- Status -- */
+export const toggleStatus = createAction('[Auth] TOGGLE_STATUS');
+
 /* -- No user -- */
 export const logout = createAction('[Auth] LOGOUT');

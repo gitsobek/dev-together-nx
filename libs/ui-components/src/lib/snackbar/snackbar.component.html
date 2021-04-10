@@ -1,0 +1,5 @@
+<aside (animationend)="onAnimationDone($event)">
+  <ng-content></ng-content>
+  <button type="button" (click)="close()">&#x2715;</button>
+  {{ close$ | async }}
+</aside>

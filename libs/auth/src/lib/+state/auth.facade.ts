@@ -9,6 +9,7 @@ import * as AuthActions from './auth.actions';
 export class AuthFacade {
   auth$ = this.store.select(authQuery.getAuth);
   user$ = this.store.select(authQuery.getUser);
+  status$ = this.store.select(authQuery.getStatus);
   isLoggedIn$ = this.store.select(authQuery.isLoggedIn);
 
   constructor(private store: Store<AuthState>) {}
@@ -25,7 +26,12 @@ export class AuthFacade {
     this.store.dispatch(AuthActions.register());
   }
 
+  toggleStatus() {
+    this.store.dispatch(AuthActions.toggleStatus())
+  }
+
   user() {
+    console.log('ddd');
     this.store.dispatch(AuthActions.getUser());
   }
 }

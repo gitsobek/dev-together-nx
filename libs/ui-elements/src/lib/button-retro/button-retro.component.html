@@ -1,8 +1,14 @@
-<a class="button nav-link">
-  <div class="bottom" [style.backgroundColor]="insideColor"></div>
+<a class="button nav-link" [class.no-hover]="isLoading">
+  <div class="bottom" [style.backgroundColor]="insideColor" [class.is-loading]="isLoading"></div>
 
-  <div class="top">
-    <div class="label">{{ text }}</div>
+  <div class="top" [class.is-loading]="isLoading">
+    <dev-together-spinner
+      *ngIf="isLoading; else noLoadingTpl"
+    ></dev-together-spinner>
+
+    <ng-template #noLoadingTpl>
+      <div class="label">{{ text }}</div>
+    </ng-template>
 
     <div class="button-border button-border-left"></div>
     <div class="button-border button-border-top"></div>

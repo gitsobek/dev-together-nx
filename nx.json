@@ -27,6 +27,7 @@
     "auth": { "tags": [] },
     "forms": { "tags": [] },
     "router": { "tags": [] },
-    "api": { "tags": [] }
+    "api": { "tags": [] },
+    "ui-components": { "tags": [] }
   }
 }

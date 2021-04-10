@@ -4,7 +4,7 @@ import { UserResponse } from '@dev-together/api';
 import { FormsFacade } from '@dev-together/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
-import { of } from 'rxjs';
+import { from, Observable, of, pipe } from 'rxjs';
 import {
   catchError,
   exhaustMap,
@@ -16,12 +16,25 @@ import {
 } from 'rxjs/operators';
 import { AuthService } from '../shared/auth.service';
 import { StorageService } from '../shared/storage.service';
+import { SnackbarService } from '@dev-together/ui-components';
 
 import * as fromForms from '@dev-together/forms';
 import * as AuthActions from './auth.actions';
+import { Auth } from '../shared/auth.abstract';
+import { AuthFacade } from './auth.facade';
 
 @Injectable()
 export class AuthEffects {
+  loginOrRegisterValidation = <T>() => (source: Observable<T>) =>
+    source.pipe(
+      tap(() => this.formsFacade.submitForm()),
+      withLatestFrom(this.formsFacade.isValid$),
+      filter(([_, valid]) => !!valid),
+      withLatestFrom(this.authFacade.status$),
+      filter(([, status]) => !status),
+      tap(() => this.authFacade.toggleStatus())
+    );
+
   getUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.getUser),
@@ -41,17 +54,21 @@ export class AuthEffects {
   login$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.login),
-      tap(() => this.formsFacade.submitForm()),
-      withLatestFrom(this.formsFacade.isValid$),
-      filter(([_, status]) => status),
+      this.loginOrRegisterValidation(),
       withLatestFrom(this.formsFacade.data$),
       exhaustMap(([_, data]) =>
         this.authService.login(data).pipe(
+          switchMap((data: UserResponse) =>
+            this.snackbarService.show(data.message).pipe(map(() => data))
+          ),
           map((data: UserResponse) =>
             AuthActions.loginSuccess({ user: data.user })
           ),
           catchError((response: HttpErrorResponse) =>
-            of(fromForms.setErrors({ errors: response.error.errors }))
+            from([
+              fromForms.setErrors({ errors: response.error.errors }),
+              AuthActions.toggleStatus(),
+            ])
           )
         )
       )
@@ -61,17 +78,19 @@ export class AuthEffects {
   register$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.register),
-      tap(() => this.formsFacade.submitForm()),
-      withLatestFrom(this.formsFacade.isValid$),
-      filter(([_, status]) => status),
+      this.loginOrRegisterValidation(),
       withLatestFrom(this.formsFacade.data$),
       exhaustMap(([_, data]) =>
         this.authService.register(data).pipe(
-          map((data: UserResponse) =>
-            AuthActions.registerSuccess({ user: data.user })
+          switchMap((data: UserResponse) =>
+            this.snackbarService.show(data.message).pipe(map(() => data))
           ),
+          map((data) => AuthActions.registerSuccess({ user: data.user })),
           catchError((response: HttpErrorResponse) =>
-            of(fromForms.setErrors({ errors: response.error.errors }))
+            from([
+              fromForms.setErrors({ errors: response.error.errors }),
+              AuthActions.toggleStatus(),
+            ])
           )
         )
       )
@@ -115,9 +134,11 @@ export class AuthEffects {
 
   constructor(
     private actions$: Actions,
+    private snackbarService: SnackbarService,
     private storageService: StorageService,
     private formsFacade: FormsFacade,
-    private authService: AuthService,
+    private authFacade: AuthFacade,
+    private authService: Auth,
     private router: Router
   ) {}
 }

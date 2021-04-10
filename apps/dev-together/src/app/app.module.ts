@@ -10,6 +10,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
+import { UiComponentsModule } from '@dev-together/ui-components';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,6 +20,7 @@ import { environment } from '../environments/environment';
     AppRoutingModule,
     UiLayoutModule,
     UiElementsModule,
+    UiComponentsModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
     NgrxRouterModule,

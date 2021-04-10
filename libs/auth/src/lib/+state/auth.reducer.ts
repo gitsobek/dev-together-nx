@@ -35,10 +35,6 @@ const reducer = createReducer(
   on(AuthActions.getUserError, () => ({
     ...authInitialState,
   })),
-  on(AuthActions.login, AuthActions.register, (state, _) => ({
-    ...state,
-    status: Status.IN_PROGRESS,
-  })),
   on(AuthActions.loginSuccess, (state, action) => ({
     ...state,
     loggedIn: true,
@@ -54,6 +50,10 @@ const reducer = createReducer(
       status: Status.INIT,
     })
   ),
+  on(AuthActions.toggleStatus, (state, _) => ({
+    ...state,
+    status: state.status === Status.INIT ? Status.IN_PROGRESS : Status.INIT,
+  })),
   on(AuthActions.logout, () => ({
     ...authInitialState,
   }))

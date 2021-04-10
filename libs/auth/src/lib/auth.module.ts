@@ -6,6 +6,7 @@ import { AuthWrapperComponent } from './auth-wrapper/auth-wrapper.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@dev-together/forms';
 import { UiElementsModule } from '@dev-together/ui-elements';
+import { UiComponentsModule } from '@dev-together/ui-components';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import {
@@ -25,6 +26,8 @@ import { AuthFacade } from './+state/auth.facade';
 import { TokenInterceptorService } from './token.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApiModule } from '@dev-together/api';
+import { Auth } from './shared/auth.abstract';
+import { MockAuthService } from './shared/mock-auth.service';
 
 const routes: Routes = [
   {
@@ -50,6 +53,7 @@ const routes: Routes = [
     FormsModule,
     ApiModule,
     UiElementsModule,
+    UiComponentsModule, 
     StoreModule.forFeature(authFeatureKey, authReducer, {
       initialState: authInitialState,
     }),
@@ -68,7 +72,10 @@ export class AuthModule {
       providers: [
         AuthEffects,
         AuthGuardService,
-        AuthService,
+        {
+          provide: Auth,
+          useClass: MockAuthService
+        },
         AuthFacade,
         TokenInterceptorService,
         {

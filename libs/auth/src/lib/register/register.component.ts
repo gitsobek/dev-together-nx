@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, HostBinding } from '@angular/core';
+import { Observable } from 'rxjs';
 import { AuthFacade } from '../+state/auth.facade';
 
 @Component({
@@ -10,7 +11,11 @@ import { AuthFacade } from '../+state/auth.facade';
 export class RegisterComponent {
   @HostBinding('class.auth-content') authStyling: boolean = true;
 
-  constructor(private authFacade: AuthFacade) {}
+  readonly status$: Observable<boolean>;
+
+  constructor(private authFacade: AuthFacade) {
+    this.status$ = this.authFacade.status$;
+  }
 
   submit(): void {
     this.authFacade.register();
