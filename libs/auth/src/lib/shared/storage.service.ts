@@ -14,7 +14,7 @@ export class StorageService implements IStorage<string> {
   }
 
   getItem<T>(key: string): T {
-    return JSON.parse(this.storage.getItem(key));
+    return JSON.parse(this.storage.getItem(key)) || null;
   }
 
   setItem<T>(key: string, value: any): void {

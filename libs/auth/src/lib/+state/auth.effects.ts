@@ -61,12 +61,12 @@ export class AuthEffects {
           switchMap((data: UserResponse) =>
             this.snackbarService.show(data.message).pipe(map(() => data))
           ),
-          map((data: UserResponse) =>
-            AuthActions.loginSuccess({ user: data.user })
+          map((response: UserResponse) =>
+            AuthActions.loginSuccess({ user: response.user })
           ),
-          catchError((response: HttpErrorResponse) =>
+          catchError((err: HttpErrorResponse) =>
             from([
-              fromForms.setErrors({ errors: response.error.errors }),
+              fromForms.setErrors({ errors: err.error.errors }),
               AuthActions.toggleStatus(),
             ])
           )
@@ -85,10 +85,12 @@ export class AuthEffects {
           switchMap((data: UserResponse) =>
             this.snackbarService.show(data.message).pipe(map(() => data))
           ),
-          map((data) => AuthActions.registerSuccess({ user: data.user })),
-          catchError((response: HttpErrorResponse) =>
+          map((response: UserResponse) =>
+            AuthActions.registerSuccess({ user: response.user })
+          ),
+          catchError((err: HttpErrorResponse) =>
             from([
-              fromForms.setErrors({ errors: response.error.errors }),
+              fromForms.setErrors({ errors: err.error.errors }),
               AuthActions.toggleStatus(),
             ])
           )

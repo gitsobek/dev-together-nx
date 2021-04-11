@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
 import { UserResponse } from '@dev-together/api';
 import { asyncScheduler, Observable, of, scheduled, throwError } from 'rxjs';
-import { delay, map, switchMap, take } from 'rxjs/operators';
+import { delay, switchMap, take } from 'rxjs/operators';
 import { LoginUser, RegisterUser, User } from '../+state/auth.models';
+import { Auth } from './auth.abstract';
 import { StorageService } from './storage.service';
 
 @Injectable()
-export class MockAuthService {
+export class MockAuthService extends Auth {
   users: User[];
 
   constructor(private storageService: StorageService) {
+    super();
     this.users = this.storageService.getItem('IM_USERS') || [];
   }
 
