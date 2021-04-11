@@ -28,6 +28,7 @@
     "forms": { "tags": [] },
     "router": { "tags": [] },
     "api": { "tags": [] },
-    "ui-components": { "tags": [] }
+    "ui-components": { "tags": [] },
+    "shared": { "tags": [] }
   }
 }

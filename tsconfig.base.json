@@ -23,7 +23,8 @@
       "@dev-together/forms": ["libs/forms/src/index.ts"],
       "@dev-together/router": ["libs/router/src/index.ts"],
       "@dev-together/api": ["libs/api/src/index.ts"],
-      "@dev-together/ui-components": ["libs/ui-components/src/index.ts"]
+      "@dev-together/ui-components": ["libs/ui-components/src/index.ts"],
+      "@dev-together/shared": ["libs/shared/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

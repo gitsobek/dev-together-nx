@@ -31,7 +31,6 @@ export class AuthFacade {
   }
 
   user() {
-    console.log('ddd');
     this.store.dispatch(AuthActions.getUser());
   }
 }

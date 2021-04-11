@@ -1,10 +1,10 @@
-<nav>
+<nav sticky>
   <div class="logo" (click)="goHome()">
     <span class="logo__circle"></span>
     <p class="logo__name">dev-together</p>
   </div>
 
-  <div [ngClass]="isLoggedIn? 'user-row' : 'buttons'">
+  <div [ngClass]="isLoggedIn ? 'user-row' : 'buttons'">
     <ng-container
       [ngTemplateOutlet]="isLoggedIn ? loggedInTpl : notLoggedInTpl"
       [ngTemplateOutletContext]="

@@ -9,5 +9,6 @@ module.exports = {
     '<rootDir>/libs/router',
     '<rootDir>/libs/api',
     '<rootDir>/libs/ui-components',
+    '<rootDir>/libs/shared',
   ],
 };

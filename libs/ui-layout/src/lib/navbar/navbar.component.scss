@@ -1,7 +1,6 @@
 $logo-color: #f04f65;
 
 nav {
-  position: relative;
   width: 100%;
   height: 80px;
   padding: 15px 35px;
@@ -12,6 +11,7 @@ nav {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  z-index: 2;
 
   .logo {
     display: flex;
@@ -24,6 +24,7 @@ nav {
       background-color: $logo-color;
       border-radius: 50%;
       display: inline-block;
+      aspect-ratio: 1/1;
     }
 
     &__name {

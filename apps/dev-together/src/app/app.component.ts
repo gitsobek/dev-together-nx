@@ -23,9 +23,6 @@ export class AppComponent implements OnInit {
     this.user$ = this.authFacade.user$;
     this.isLoggedIn$ = this.authFacade.isLoggedIn$;
 
-    this.authFacade.user$.subscribe(console.log);
-    this.authFacade.isLoggedIn$.subscribe(console.log);
-
     of(this.storageService.getItem('token'))
       .pipe(
         filter((v) => !!v),
