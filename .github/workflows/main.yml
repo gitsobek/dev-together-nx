@@ -35,8 +35,8 @@ jobs:
         if: success()
         uses: actions/upload-artifact@v1
         with:
-          name: deploy_dist
-          path: dist/apps
+          name: dist
+          path: dist
   deploy:
     name: Deploy
     needs: build
@@ -47,11 +47,11 @@ jobs:
       - name: Download build
         uses: actions/download-artifact@v1
         with:
-          name: deploy_dist
+          name: dist
+          path: dist
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
           args: deploy --only hosting
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-      
