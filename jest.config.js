@@ -10,5 +10,7 @@ module.exports = {
     '<rootDir>/libs/api',
     '<rootDir>/libs/ui-components',
     '<rootDir>/libs/shared',
+    '<rootDir>/libs/blog',
+    '<rootDir>/libs/article',
   ],
 };

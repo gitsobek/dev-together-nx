@@ -24,7 +24,9 @@
       "@dev-together/router": ["libs/router/src/index.ts"],
       "@dev-together/api": ["libs/api/src/index.ts"],
       "@dev-together/ui-components": ["libs/ui-components/src/index.ts"],
-      "@dev-together/shared": ["libs/shared/src/index.ts"]
+      "@dev-together/shared": ["libs/shared/src/index.ts"],
+      "@dev-together/blog": ["libs/blog/src/index.ts"],
+      "@dev-together/article": ["libs/article/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

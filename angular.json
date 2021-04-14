@@ -370,6 +370,56 @@
           }
         }
       }
+    },
+    "blog": {
+      "projectType": "library",
+      "root": "libs/blog",
+      "sourceRoot": "libs/blog/src",
+      "prefix": "dev-together",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/blog/src/**/*.ts",
+              "libs/blog/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/blog"],
+          "options": {
+            "jestConfig": "libs/blog/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "article": {
+      "projectType": "library",
+      "root": "libs/article",
+      "sourceRoot": "libs/article/src",
+      "prefix": "dev-together",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/article/src/**/*.ts",
+              "libs/article/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/article"],
+          "options": {
+            "jestConfig": "libs/article/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }

@@ -1,0 +1,11 @@
+<section class="wrapper">
+  <div #target class="tabs left">
+    <div
+      *ngFor="let config of tabConfig; let first = first"
+      [type]="config?.type"
+      class="tab {{ first ? 'active' : '' }}"
+    >
+      {{ config?.name }}
+    </div>
+  </div>
+</section>

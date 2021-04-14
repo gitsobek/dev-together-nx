@@ -29,6 +29,8 @@
     "router": { "tags": [] },
     "api": { "tags": [] },
     "ui-components": { "tags": [] },
-    "shared": { "tags": [] }
+    "shared": { "tags": [] },
+    "blog": { "tags": [] },
+    "article": { "tags": [] }
   }
 }

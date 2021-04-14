@@ -38,7 +38,7 @@ header {
   }
 
   .tags {
-    width: 200px;
+    width: 220px;
     min-height: 200px;
     position: absolute;
     top: 150px;
@@ -46,17 +46,23 @@ header {
     background-color: #2acdc1;
     border-radius: 30px;
     padding: 15px;
-  }
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
 
-  .tag {
-    cursor: pointer;
-    padding: 6px;
-    display: inline-block;
-    color: #fff;
+    .tag {
+      cursor: pointer;
+      padding: 6px;
+      display: inline-block;
+      color: #fff;
+      transition: all 0.2s ease-in-out;
 
-    &.is-active {
-      font-size: 17px;
-      color: #f04f65;
+      &.is-active {
+        transform: scale(1.1);
+        font-weight: 600;
+      }
+
+      &:hover {
+        transform: scale(1.1);
+      }
     }
   }
 
@@ -64,4 +70,10 @@ header {
     height: 100%;
     overflow: hidden;
   }
+}
+
+.blog-section {
+  margin-top: -100px;
+  position: relative;
+  z-index: 3;
 }

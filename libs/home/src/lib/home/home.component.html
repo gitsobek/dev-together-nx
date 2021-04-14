@@ -8,7 +8,7 @@
   </section>
 
   <section class="tags">
-    <p *ngFor="let tag of tags" class="tag" (click)="onTagClick(tag)">
+    <p *ngFor="let tag of (tags$ | async)" class="tag" [class.is-active]="tag === (selectedTag$ | async)" (click)="onTagClick(tag)">
       #{{ tag | lowercase }}
     </p>
   </section>
@@ -26,3 +26,10 @@
     </svg>
   </div>
 </header>
+
+<section class="blog-section">
+  <dev-together-tab-switch
+    [config]="tabConfig"
+    (setType)="onBlogTypeSelected($event)"
+  ></dev-together-tab-switch>
+</section>
