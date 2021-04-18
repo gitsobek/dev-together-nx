@@ -1,3 +1,5 @@
+$space-from-tabs: 30px;
+
 header {
   background: linear-gradient(to left, #2acdc1, #f04f65, #e94057);
   background-color: #dfdbe5;
@@ -73,7 +75,20 @@ header {
 }
 
 .blog-section {
+  display: flex;
+  flex-direction: column;
   margin-top: -100px;
   position: relative;
   z-index: 3;
+  height: 400px;
+
+  .blog-list {
+    margin-top: $space-from-tabs;
+    padding-bottom: $space-from-tabs;
+  }
+
+  .blog-spinner {
+    margin-top: $space-from-tabs
+  }
 }
+

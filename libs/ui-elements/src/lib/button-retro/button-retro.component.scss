@@ -1,12 +1,12 @@
 @mixin button-focus($color) {
-    border-color: $color;
-    box-shadow: 0 0 10px $color;
+  border-color: $color;
+  box-shadow: 0 0 10px $color;
 }
 
 @mixin dimensions($width: 120px, $height: 55px) {
   min-width: $width;
-  max-height: $height;
-} 
+  min-height: $height;
+}
 
 :host {
   --hoverColor: #2acdc1;

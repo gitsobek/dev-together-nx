@@ -5,11 +5,13 @@ import { RouterModule } from '@angular/router';
 import { UiComponentsModule } from '@dev-together/ui-components';
 import { BlogModule } from '@dev-together/blog';
 import { HomeResolver } from './home.resolver';
+import { UiElementsModule } from '@dev-together/ui-elements';
 
 @NgModule({
   imports: [
     CommonModule,
     BlogModule,
+    UiElementsModule,
     UiComponentsModule,
     RouterModule.forChild([
       {

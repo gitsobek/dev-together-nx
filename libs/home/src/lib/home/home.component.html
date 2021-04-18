@@ -8,7 +8,12 @@
   </section>
 
   <section class="tags">
-    <p *ngFor="let tag of (tags$ | async)" class="tag" [class.is-active]="tag === (selectedTag$ | async)" (click)="onTagClick(tag)">
+    <p
+      *ngFor="let tag of tags$ | async"
+      class="tag"
+      [class.is-active]="tag === (selectedTag$ | async)"
+      (click)="onTagClick(tag)"
+    >
       #{{ tag | lowercase }}
     </p>
   </section>
@@ -32,4 +37,18 @@
     [config]="tabConfig"
     (setType)="onBlogTypeSelected($event)"
   ></dev-together-tab-switch>
+
+  <dev-together-spinner
+    *ngIf="isBlogLoading$ | async; else blogListTpl"
+    class="blog-spinner"
+    color="#f04f65"
+    width="100px"
+    height="100px"
+    thickness="10px"
+    position="center"
+  ></dev-together-spinner>
+
+  <ng-template #blogListTpl>
+    <dev-together-blog-list class="blog-list"></dev-together-blog-list>
+  </ng-template>
 </section>

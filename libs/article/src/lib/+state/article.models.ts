@@ -3,9 +3,17 @@ export interface Article {
   title: string;
   description: string;
   body: string;
-  tagList: string[];
+  tags: string[];
   createdAt: string;
   updatedAt: string;
   favorites: number;
-  author: object;
+  favorited: boolean;
+  author: Profile;
+}
+
+export interface Profile {
+  username: string;
+  bio: string;
+  image: string;
+  following: boolean;
 }

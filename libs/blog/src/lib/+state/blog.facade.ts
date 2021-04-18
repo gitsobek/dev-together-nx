@@ -5,6 +5,7 @@ import { blogQuery } from './blog.selectors';
 import { withLatestFrom, map } from 'rxjs/operators';
 import { BlogState } from './blog.reducer';
 import { ArticleQuery, ListType } from './blog.models';
+import { go } from '@dev-together/router';
 
 @Injectable()
 export class BlogFacade {
@@ -44,5 +45,9 @@ export class BlogFacade {
 
   setFavorite(slug: string, status: boolean) {
     this.store.dispatch(BlogActions.setFavoriteArticle({ slug, status }));
+  }
+
+  navigateToArticle(slug: string) {
+    this.store.dispatch(go({ to: { path: ['/article', slug] } }));
   }
 }

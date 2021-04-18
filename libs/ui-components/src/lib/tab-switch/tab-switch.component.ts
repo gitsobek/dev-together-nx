@@ -1,5 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   EventEmitter,
@@ -25,6 +26,7 @@ import { TabSwitchConfig } from '../ui-components.models';
   selector: 'dev-together-tab-switch',
   templateUrl: './tab-switch.component.html',
   styleUrls: ['./tab-switch.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TabSwitchComponent implements OnDestroy {
   @ViewChild('target') target: ElementRef;
@@ -47,7 +49,7 @@ export class TabSwitchComponent implements OnDestroy {
     fromEvent(documentRef, 'click')
       .pipe(
         debounceTime(0),
-        map((el) =>
+        map((el: MouseEvent) =>
           this.target.nativeElement.contains(el.target) ? el.target : null
         ),
         filter((v) => !!v && !(v as HTMLElement).classList.contains('active')),

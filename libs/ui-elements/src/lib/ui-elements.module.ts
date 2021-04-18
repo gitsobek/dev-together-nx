@@ -10,7 +10,8 @@ import { SpinnerComponent } from './spinner/spinner.component';
     SpinnerComponent
   ],
   exports: [
-    ButtonRetroComponent
+    ButtonRetroComponent,
+    SpinnerComponent
   ],
 })
 export class UiElementsModule {}

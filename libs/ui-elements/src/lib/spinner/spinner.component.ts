@@ -1,15 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  HostBinding,
+  Input,
+  OnInit,
+} from '@angular/core';
 
 @Component({
   selector: 'dev-together-spinner',
   templateUrl: './spinner.component.html',
-  styleUrls: ['./spinner.component.scss']
+  styleUrls: ['./spinner.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SpinnerComponent implements OnInit {
+export class SpinnerComponent {
+  @HostBinding('style.--fillColor')
+  @Input()
+  color: string;
 
-  constructor() { }
+  @Input()
+  width: string = '5em';
 
-  ngOnInit(): void {
-  }
+  @Input()
+  height: string = '5em';
 
+  @Input()
+  thickness: string = '5px';
+
+  @Input()
+  position: string = 'center';
+
+  constructor() {}
 }

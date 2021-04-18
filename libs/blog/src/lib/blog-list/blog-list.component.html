@@ -1,0 +1,14 @@
+<section *ngIf="(articles$ | async).length > 0; else noArticles" class="articles-grid">
+  <dev-together-blog-list-item
+    *ngFor="let article of articles$ | async"
+    e2e-id="blog-list"
+    [article]="article"
+    (navigateToArticle)="navigateToArticle($event)"
+    (setFavorite)="setFavorite($event)"
+  >
+  </dev-together-blog-list-item>
+</section>
+
+<ng-template #noArticles>
+  <div class="no-articles">-No articles to show-</div>
+</ng-template>

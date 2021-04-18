@@ -1,1 +1,29 @@
-<p>blog-list-item works!</p>
+<article>
+  <div class="header">
+    <div>
+      <img [src]="article.author?.image" />
+      <p>{{ article.author?.username }}</p>
+    </div>
+
+    <div>
+      <p>{{ article.createdAt | date }}</p>
+    </div>
+  </div>
+
+  <h1>{{ article.title }}</h1>
+
+  <h2>
+    {{
+      article.description
+        ? article.description
+        : (article.body | slice: 0:40) + '...'
+    }}
+  </h2>
+
+  <div class="footer">
+    <ul>
+      <li *ngFor="let tag of article.tags">#{{ tag | lowercase }}</li>
+    </ul>
+    <p>Read more</p>
+  </div>
+</article>

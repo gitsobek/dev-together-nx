@@ -1,0 +1,25 @@
+.articles-grid {
+  --repeat: auto-fit;
+
+  @media (min-width: calc(350px * 2)) {
+    --repeat: 2;
+  }
+
+  @media (min-width: calc(350px * 3)) {
+    --repeat: 3;
+  }
+}
+
+.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--repeat, auto-fit), minmax(300px, 1fr));
+  gap: 50px;
+  padding: 0 20px;
+}
+
+.no-articles {
+  font-size: 15px;
+  font-weight: 300;
+  text-align: center;
+  height: 200px;
+}

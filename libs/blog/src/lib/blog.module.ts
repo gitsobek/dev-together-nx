@@ -13,6 +13,7 @@ import {
 import { BlogEffects } from './+state/blog.effects';
 import { BlogFacade } from './+state/blog.facade';
 import { BlogListItemComponent } from './blog-list-item/blog-list-item.component';
+import { BlogListComponent } from './blog-list/blog-list.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,11 @@ import { BlogListItemComponent } from './blog-list-item/blog-list-item.component
     BlogFacade,
   ],
   declarations: [
-    BlogListItemComponent
+    BlogListItemComponent,
+    BlogListComponent
   ],
+  exports: [
+    BlogListComponent
+  ]
 })
 export class BlogModule {}
