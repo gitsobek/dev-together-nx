@@ -17,10 +17,10 @@ Blog platform created especially for developers who want to share their knowledg
 
 ## Motivation
 
-My main motivation was to play around with a modern technology stack in order to gain more experience and sharpen my dev skills. My desire was to master and use in practise the advanced concepts of Angular, become competent in state management and use NgRx's potential to its fullest, also become consistent and learn how to properly create unit & E2E tests.
+My main motivation was to play around with a modern technology stack in order to gain more experience and sharpen my dev skills. My desire was to master and use in practise the advanced concepts of Angular, become competent in state management and use NgRx's potential to its fullest, also become consistent and learn how to properly create unit & E2E tests. Everything - I mean every UI component and functionality that these components rely on or every different feature was made from scratch, no third-party libraries are used.
 
 ## Demo
-Soon!
+[Click here!](https://dev-together-d9f89.web.app/)&nbsp; Keep in mind this project is still under development.
 
 ## Plans
 After completing this project, my next goal will be to create a backend server in Spring (Java) and integrate it with this application.
