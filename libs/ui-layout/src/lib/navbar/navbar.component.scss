@@ -13,6 +13,18 @@ nav {
   align-items: center;
   z-index: 4;
 
+  @media (max-width: 400px) {
+    padding: 15px 25px;
+  }
+
+  @media (max-width: 320px) {
+    padding: 15px;
+  }
+
+  @media (max-width: 290px) {
+    padding: 15px 5px;
+  }
+
   .logo {
     display: flex;
     flex-direction: row;

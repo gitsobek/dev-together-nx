@@ -7,7 +7,6 @@ import {
   Inject,
   Input,
   OnDestroy,
-  OnInit,
   Output,
   Renderer2,
   ViewChild,

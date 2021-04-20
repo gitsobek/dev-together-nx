@@ -1,0 +1,22 @@
+<ul>
+  <li>
+    <div (click)="prev()" class="indicator" [class.disabled]="startingPage === currentPage">
+      <span class="indicator-arrow"><</span
+      ><span class="indicator-text">Prev</span>
+    </div>
+  </li>
+
+  <li
+    *repeat="let pageNo of displayedPages; startingNumber : startingPage"
+    (click)="selectPage(pageNo)"
+  >
+    <span [class.active]="currentPage === pageNo">{{ pageNo }}</span>
+  </li>
+
+  <li>
+    <div (click)="next()" class="indicator" [class.disabled]="totalPages === currentPage">
+      <span class="indicator-text">Next</span
+      ><span class="indicator-arrow">></span>
+    </div>
+  </li>
+</ul>

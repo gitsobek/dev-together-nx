@@ -10,9 +10,13 @@ header {
 
   .header {
     position: absolute;
-    top: 100px;
+    top: 60px;
     left: 9vw;
     letter-spacing: 8px;
+
+    @media (max-width: 620px) {
+      top: 50px;
+    }
 
     h1 {
       color: #fff;
@@ -23,17 +27,17 @@ header {
       }
 
       > span:nth-child(1) {
-        font-size: 42px;
+        font-size: clamp(1.5rem, 0.4071rem + 4.8571vw, 3.2rem);
         font-weight: 600;
       }
 
       > span:nth-child(2) {
-        font-size: 36px;
+        font-size: clamp(1.2rem, 0.2357rem + 4.2857vw, 2.7rem);
         font-weight: 400;
       }
 
       > span:nth-child(3) {
-        font-size: 30px;
+        font-size: clamp(0.8rem, -0.2286rem + 4.5714vw, 2.4rem);
         font-weight: 300;
       }
     }
@@ -49,6 +53,16 @@ header {
     border-radius: 30px;
     padding: 15px;
     box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
+
+    @media (max-width: 560px) {
+      top: 180px;
+    }
+
+    @media (max-width: 400px) {
+      right: unset;
+      left: 50%;
+      transform: translateX(-50%);
+    }
 
     .tag {
       cursor: pointer;
@@ -81,6 +95,7 @@ header {
   position: relative;
   z-index: 3;
   height: 400px;
+  padding-bottom: $space-from-tabs;
 
   .blog-list {
     margin-top: $space-from-tabs;
@@ -88,7 +103,11 @@ header {
   }
 
   .blog-spinner {
-    margin-top: $space-from-tabs
+    margin-top: $space-from-tabs;
+    margin-bottom: 100px;
+  }
+
+  .blog-paginator {
+    margin: 0 auto;
   }
 }
-

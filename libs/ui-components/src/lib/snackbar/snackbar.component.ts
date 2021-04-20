@@ -1,4 +1,4 @@
-import { Component, ElementRef, Inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Inject, Input } from '@angular/core';
 import { fromEvent, Observer, timer } from 'rxjs';
 import { repeatWhen, takeUntil, tap } from 'rxjs/operators';
 
@@ -6,6 +6,7 @@ import { repeatWhen, takeUntil, tap } from 'rxjs/operators';
   selector: 'dev-together-snackbar',
   templateUrl: './snackbar.component.html',
   styleUrls: ['./snackbar.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SnackbarComponent {
   @Input()

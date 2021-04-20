@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TabSwitchConfig } from '@dev-together/ui-components';
-import { BlogFacade, ListType } from '@dev-together/blog';
+import { ArticleQuery, BlogFacade, ListType } from '@dev-together/blog';
 import { Observable } from 'rxjs';
 import { AuthFacade } from '@dev-together/auth';
 
@@ -11,9 +11,11 @@ import { AuthFacade } from '@dev-together/auth';
 })
 export class HomeComponent implements OnInit {
   tags$: Observable<string[]>;
+  query$: Observable<ArticleQuery>;
   isLogged$: Observable<boolean>;
   selectedTag$: Observable<string>;
   isBlogLoading$: Observable<boolean>;
+  totalPages$: Observable<number>;
 
   readonly tabConfig: TabSwitchConfig[] = [
     {
@@ -28,8 +30,10 @@ export class HomeComponent implements OnInit {
 
   constructor(private authFacade: AuthFacade, private blogFacade: BlogFacade) {
     this.tags$ = this.blogFacade.tags$;
+    this.query$ = this.blogFacade.query$;
     this.isBlogLoading$ = this.blogFacade.isLoading$;
     this.selectedTag$ = this.blogFacade.selectedTag$;
+    this.totalPages$ = this.blogFacade.totalPages$;
 
     this.isLogged$ = this.authFacade.isLoggedIn$;
   }
@@ -44,5 +48,9 @@ export class HomeComponent implements OnInit {
 
   onTagClick(tag: string): void {
     this.blogFacade.setTag(tag);
+  }
+
+  onPageSelect(pageNo: number): void {
+    this.blogFacade.setPage(pageNo);
   }
 }

@@ -3,6 +3,7 @@ import { Article } from '@dev-together/article';
 import { asyncScheduler, Observable, scheduled } from 'rxjs';
 import { delay, take } from 'rxjs/operators';
 import { ArticleQuery } from '../+state/blog.models';
+import { getArticles } from '../+state/blog.selectors';
 import { Blog } from './blog.abstract';
 
 @Injectable()
@@ -14,9 +15,9 @@ export class MockBlogService extends Blog {
   query(
     config: ArticleQuery
   ): Observable<{ articles: Article[]; count: number }> {
-    const { type, filters } = config;
+    const { type, pageIndex = 1, filters } = config;
 
-    const singleArticle = {
+    const singleArticle: Article = {
       author: {
         username: 'Piotr Sobuś',
         bio: null,
@@ -37,11 +38,17 @@ export class MockBlogService extends Blog {
       title: 'Angular vs React: which one to choose for your app',
     };
 
-    let response =
+    let response: { articles: Article[]; count: number } =
       type === 'ALL'
         ? {
-            articles: Array(6).fill(singleArticle),
-            count: 1,
+            articles: Array(100)
+              .fill(singleArticle)
+              .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+              .slice(
+                (pageIndex - 1) * (filters.limit || 10),
+                pageIndex * (filters.limit || 10)
+              ),
+            count: 100,
           }
         : {
             articles: [],

@@ -51,4 +51,12 @@
   <ng-template #blogListTpl>
     <dev-together-blog-list class="blog-list"></dev-together-blog-list>
   </ng-template>
+
+  <dev-together-paginator
+    *ngIf="(totalPages$ | async) > 1"
+    [currentPage]="(query$ | async).pageIndex"
+    [totalPages]="totalPages$ | async"
+    (pageSelect)="onPageSelect($event)"
+    class="blog-paginator"
+  ></dev-together-paginator>
 </section>
