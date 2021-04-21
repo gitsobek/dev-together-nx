@@ -11,6 +11,7 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { UiComponentsModule } from '@dev-together/ui-components';
+import { MatchMediaService } from '@dev-together/shared';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,7 +27,7 @@ import { UiComponentsModule } from '@dev-together/ui-components';
     NgrxRouterModule,
     !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
-  providers: [],
+  providers: [MatchMediaService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -29,7 +29,6 @@ export class RepeatDirective {
   startingNumber: number = 0;
 
   private safeCount: number;
-  private ctrLength: number;
 
   constructor(
     @Inject(ViewContainerRef) private readonly viewContainer: ViewContainerRef,
@@ -52,7 +51,6 @@ export class RepeatDirective {
 
     this.safeCount = Math.floor(Math.max(0, Math.min(this.count, MAX_VALUE)));
     const { length } = this.viewContainer;
-    this.ctrLength = length;
 
     if (this.safeCount < length) {
       this.removeContainers(length - this.safeCount);

@@ -17,9 +17,27 @@
   padding: 0 20px;
 }
 
-.no-articles {
+.warning {
   font-size: 15px;
   font-weight: 300;
   text-align: center;
   height: 200px;
+
+  > span {
+    color: #04049d;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &:focus-visible {
+      border: 1px solid #04049d;
+      border-radius: 5px;
+    }
+  }
 }

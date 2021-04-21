@@ -39,3 +39,53 @@ button:not(:last-child) {
     border-radius: 50%;
   }
 }
+
+.action-text {
+  font-family: sans-serif;
+  font-weight: 600;
+  color: #04049d;
+  font-size: 12px;
+  line-height: 110%;
+  letter-spacing: 2px;
+  text-align: center;
+  text-transform: uppercase;
+  display: inline-block;
+  cursor: pointer;
+  transition: all 0.15s ease-out;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    border: 1px solid #04049d;
+    border-radius: 5px;
+  }
+
+  &:not(:last-child) {
+    margin-right: 10px;
+  }
+
+  &[routerLink="/login"] {
+    &:hover {
+      color: #f04f65
+    }
+  }
+
+  &[routerLink="/register"] {
+    &:hover {
+      color: #2acdc1;
+    }
+  }
+
+  @media (max-width: 290px) {
+    display: block;
+    margin-right: 0;
+    text-align: end;
+
+    &:not(:last-child) {
+      margin-right: 0;
+      margin-bottom: 3px;
+    }
+  }
+}

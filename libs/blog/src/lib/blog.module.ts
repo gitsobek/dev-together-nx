@@ -14,10 +14,12 @@ import { BlogEffects } from './+state/blog.effects';
 import { BlogFacade } from './+state/blog.facade';
 import { BlogListItemComponent } from './blog-list-item/blog-list-item.component';
 import { BlogListComponent } from './blog-list/blog-list.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
     CommonModule,
+    RouterModule,
     StoreModule.forFeature(blogFeatureKey, blogReducer, {
       initialState: blogInitialState,
     }),

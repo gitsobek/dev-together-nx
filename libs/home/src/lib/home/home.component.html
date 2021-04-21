@@ -49,7 +49,11 @@
   ></dev-together-spinner>
 
   <ng-template #blogListTpl>
-    <dev-together-blog-list class="blog-list"></dev-together-blog-list>
+    <dev-together-blog-list
+      [isLogged]="isLogged$ | async"
+      [noAuthorizedType]="tabConfig[1].type"
+      class="blog-list"
+    ></dev-together-blog-list>
   </ng-template>
 
   <dev-together-paginator

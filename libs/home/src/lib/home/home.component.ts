@@ -3,6 +3,7 @@ import { TabSwitchConfig } from '@dev-together/ui-components';
 import { ArticleQuery, BlogFacade, ListType } from '@dev-together/blog';
 import { Observable } from 'rxjs';
 import { AuthFacade } from '@dev-together/auth';
+import { MatchMediaService } from '@dev-together/shared';
 
 @Component({
   selector: 'dev-together-home',
@@ -28,7 +29,11 @@ export class HomeComponent implements OnInit {
     },
   ];
 
-  constructor(private authFacade: AuthFacade, private blogFacade: BlogFacade) {
+  constructor(
+    private authFacade: AuthFacade,
+    private blogFacade: BlogFacade,
+    private matchMediaService: MatchMediaService
+  ) {
     this.tags$ = this.blogFacade.tags$;
     this.query$ = this.blogFacade.query$;
     this.isBlogLoading$ = this.blogFacade.isLoading$;

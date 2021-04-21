@@ -17,12 +17,12 @@ nav {
     padding: 15px 25px;
   }
 
-  @media (max-width: 320px) {
+  @media (max-width: 325px) {
     padding: 15px;
   }
 
-  @media (max-width: 290px) {
-    padding: 15px 5px;
+  @media (max-width: 305px) {
+    padding: 15px 10px;
   }
 
   .logo {
@@ -37,6 +37,11 @@ nav {
       border-radius: 50%;
       display: inline-block;
       aspect-ratio: 1/1;
+
+      @media (max-width: 350px) {
+        height: 15px;
+        width: 15px;
+      }
     }
 
     &__name {
@@ -44,6 +49,12 @@ nav {
       margin-left: 3px;
       color: $logo-color;
       font-weight: 300;
+
+      @media (max-width: 350px) {
+        font-size: 15px;
+        position: relative;
+        bottom: 2px;
+      }
     }
   }
 

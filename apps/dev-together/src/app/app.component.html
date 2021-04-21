@@ -14,20 +14,27 @@
   </ng-template>
 
   <ng-template appNotLoggedIn>
-    <button
-      dev-together-button-retro
-      text="Login"
-      insideColor="#2acdc1"
-      hoverColor="#f04f65"
-      routerLink="/login"
-    ></button>
-    <button
-      dev-together-button-retro
-      text="Register"
-      insideColor="#f04f65"
-      hoverColor="#2acdc1"
-      routerLink="/register"
-    ></button>
+    <ng-container *ngIf="buttonsHide$ | async; else showButtons">
+      <p class="action-text" routerLink="/login">Login</p>      
+      <p class="action-text" routerLink="/register">Register</p>
+    </ng-container>
+
+    <ng-template #showButtons>
+      <button
+        dev-together-button-retro
+        text="Login"
+        insideColor="#2acdc1"
+        hoverColor="#f04f65"
+        routerLink="/login"
+      ></button>
+      <button
+        dev-together-button-retro
+        text="Register"
+        insideColor="#f04f65"
+        hoverColor="#2acdc1"
+        routerLink="/register"
+      ></button>
+    </ng-template>
   </ng-template>
 </dev-together-navbar>
 

@@ -1,8 +1,8 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   ContentChild,
   Input,
-  OnInit,
   TemplateRef,
 } from '@angular/core';
 import { Router } from '@angular/router';
@@ -18,6 +18,7 @@ interface TemplateContext<T> {
   selector: 'dev-together-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NavbarComponent {
   @ContentChild(LoggedInDirective, { static: true, read: TemplateRef })

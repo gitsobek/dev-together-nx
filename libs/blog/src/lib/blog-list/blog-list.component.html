@@ -1,14 +1,28 @@
-<section *ngIf="(articles$ | async).length > 0; else noArticles" class="articles-grid">
-  <dev-together-blog-list-item
-    *ngFor="let article of articles$ | async"
-    e2e-id="blog-list"
-    [article]="article"
-    (navigateToArticle)="navigateToArticle($event)"
-    (setFavorite)="setFavorite($event)"
-  >
-  </dev-together-blog-list-item>
-</section>
+<ng-container
+  *ngIf="
+    noAuthorizedType === (query$ | async)?.type && !isLogged;
+    else showArticles
+  "
+>
+  <div class="warning">Please <span routerLink="/login">login</span> or <span routerLink="/register">register</span> in order to manage your articles.</div>
+</ng-container>
 
-<ng-template #noArticles>
-  <div class="no-articles">-No articles to show-</div>
+<ng-template #showArticles>
+  <section
+    *ngIf="(articles$ | async).length > 0; else noArticles"
+    class="articles-grid"
+  >
+    <dev-together-blog-list-item
+      *ngFor="let article of articles$ | async"
+      e2e-id="blog-list"
+      [article]="article"
+      (navigateToArticle)="navigateToArticle($event)"
+      (setFavorite)="setFavorite($event)"
+    >
+    </dev-together-blog-list-item>
+  </section>
+
+  <ng-template #noArticles>
+    <div class="warning">-No articles to show-</div>
+  </ng-template>
 </ng-template>
