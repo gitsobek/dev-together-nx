@@ -32,7 +32,6 @@ export class HomeComponent implements OnInit {
   constructor(
     private authFacade: AuthFacade,
     private blogFacade: BlogFacade,
-    private matchMediaService: MatchMediaService
   ) {
     this.tags$ = this.blogFacade.tags$;
     this.query$ = this.blogFacade.query$;

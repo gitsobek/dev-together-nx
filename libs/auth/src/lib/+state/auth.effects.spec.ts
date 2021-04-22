@@ -10,7 +10,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { hot } from '@nrwl/angular/testing';
-import { cold, getTestScheduler } from 'jasmine-marbles';
+import { cold } from 'jasmine-marbles';
 import { Actions } from '@ngrx/effects';
 import { User } from './auth.models';
 import * as AuthActions from './auth.actions';
@@ -110,7 +110,7 @@ describe('AuthEffects', () => {
 
     it('should dispatch a GetUserError when service call fails', () => {
       const result = {
-        name: 'error',
+        code: 403,
         message: 'Invalid token.',
       };
       const getUserAction = AuthActions.getUser();
@@ -261,7 +261,7 @@ describe('AuthEffects', () => {
       const logoutAction = AuthActions.logout();
       actions$ = of(logoutAction);
 
-      effects.logout$.subscribe((v) => {
+      effects.logout$.subscribe(() => {
         expect(router.navigateByUrl).toHaveBeenCalledWith('/');
         const token = storage.getItem('token');
         expect(token).toBeNull();

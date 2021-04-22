@@ -9,7 +9,7 @@
 
 <ng-template #showArticles>
   <section
-    *ngIf="(articles$ | async).length > 0; else noArticles"
+    *ngIf="(articles$ | async)?.length > 0; else noArticles"
     class="articles-grid"
   >
     <dev-together-blog-list-item

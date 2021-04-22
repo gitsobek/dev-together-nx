@@ -1,10 +1,11 @@
+import { ErrorResponse } from '@dev-together/api';
 import { createAction, props } from '@ngrx/store';
 import { User } from './auth.models';
 
 /* -- User data -- */
 export const getUser = createAction('[Auth] GET_USER');
 export const getUserSuccess = createAction('[Auth] GET_USER_SUCCESS', props<{ user: User }>());
-export const getUserError = createAction('[Auth] GET_USER_ERROR', props<{ error: Error }>());
+export const getUserError = createAction('[Auth] GET_USER_ERROR', props<{ error: ErrorResponse }>());
 
 /* -- Login -- */
 export const login = createAction('[Auth] LOGIN');

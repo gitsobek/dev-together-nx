@@ -17,15 +17,17 @@ export class BlogListComponent implements OnInit {
   query$: Observable<ArticleQuery>;
   articles$: Observable<Article[]>;
 
+  abc: any;
+  xyz: any;
+
   constructor(private blogFacade: BlogFacade) {}
 
   ngOnInit(): void {
     this.articles$ = this.blogFacade.articles$;
     this.query$ = this.blogFacade.query$;
-  }
 
-  setFavorite({ slug, status }: { slug: string; status: boolean }): void {
-    this.blogFacade.setFavorite(slug, status);
+    this.blogFacade.query$.subscribe(x => this.abc = x);
+    this.blogFacade.articles$.subscribe(x => this.xyz = x);
   }
 
   navigateToArticle(slug: string) {

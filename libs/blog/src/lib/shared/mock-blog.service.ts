@@ -56,10 +56,11 @@ export class MockBlogService extends Blog {
           };
 
     if (filters.tag !== 'All') {
-      response = {
-        ...response,
-        articles: response.articles.filter((a) => a.tags.includes(filters.tag)),
-      };
+      const articles = response.articles.filter((a) =>
+        a.tags.includes(filters.tag)
+      );
+
+      response = { articles, count: articles.length };
     }
 
     return scheduled([response], asyncScheduler).pipe(delay(500), take(1));

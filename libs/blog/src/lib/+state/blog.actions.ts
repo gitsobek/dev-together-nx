@@ -1,6 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { ArticleQuery, ListType } from './blog.models';
 import { Article } from '@dev-together/article';
+import { ErrorResponse } from '@dev-together/api';
 
 /* -- Articles list -- */
 export const loadArticles = createAction('[Blog] LOAD_ARTICLES');
@@ -12,7 +13,7 @@ export const loadArticlesSuccess = createAction(
 
 export const loadArticlesFail = createAction(
   '[Blog] LOAD_ARTICLES_FAIL',
-  props<{ error: Error }>()
+  props<{ error: ErrorResponse }>()
 );
 
 /* -- Articles query -- */
@@ -54,7 +55,7 @@ export const setFavoriteArticleSuccess = createAction(
 
 export const setFavoriteArticleFail = createAction(
   '[Blog] FAVORITE_ARTICLE_FAIL',
-  props<{ error: Error }>()
+  props<{ error: ErrorResponse }>()
 );
 
 /* -- Tags -- */
@@ -67,5 +68,5 @@ export const loadTagsSuccess = createAction(
 
 export const loadTagsFail = createAction(
   '[Blog] LOAD_TAGS_FAIL',
-  props<{ error: Error }>()
+  props<{ error: ErrorResponse }>()
 );
