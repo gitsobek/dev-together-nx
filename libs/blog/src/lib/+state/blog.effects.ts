@@ -59,19 +59,19 @@ export class BlogEffects {
     )
   );
 
-  setFavorite$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(BlogActions.setFavoriteArticle),
-      concatMap((action) =>
-        this.blogActionsService.favorite(action.slug, action.status).pipe(
-          map((response) =>
-            BlogActions.setFavoriteArticleSuccess({ article: response.article })
-          ),
-          catchError((error) => of(BlogActions.setFavoriteArticleFail(error)))
-        )
-      )
-    )
-  );
+  // setFavorite$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(BlogActions.setFavoriteArticle),
+  //     concatMap((action) =>
+  //       this.blogActionsService.favorite(action.slug, action.status).pipe(
+  //         map((response) =>
+  //           BlogActions.setFavoriteArticleSuccess({ article: response.article })
+  //         ),
+  //         catchError((error) => of(BlogActions.setFavoriteArticleFail(error)))
+  //       )
+  //     )
+  //   )
+  // );
 
   constructor(
     private actions$: Actions,

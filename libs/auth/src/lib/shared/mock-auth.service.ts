@@ -84,6 +84,7 @@ export class MockAuthService extends Auth {
 
   register(credentials: RegisterUser): Observable<UserResponse> {
     this.users.push({
+      id: (this.users.length + 1) + '',
       email: credentials.email,
       token: '',
       username: credentials.username,

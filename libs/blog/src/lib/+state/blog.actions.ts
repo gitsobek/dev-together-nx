@@ -42,22 +42,6 @@ export const setArticlesType = createAction(
   props<{ listType: ListType }>()
 );
 
-/* -- Articles actions -- */
-export const setFavoriteArticle = createAction(
-  '[Blog] FAVORITE_ARTICLE',
-  props<{ slug: string; status: boolean }>()
-);
-
-export const setFavoriteArticleSuccess = createAction(
-  '[Blog] FAVORITE_ARTICLE_SUCCESS',
-  props<{ article: Article }>()
-);
-
-export const setFavoriteArticleFail = createAction(
-  '[Blog] FAVORITE_ARTICLE_FAIL',
-  props<{ error: ErrorResponse }>()
-);
-
 /* -- Tags -- */
 export const loadTags = createAction('[Blog] LOAD_TAGS');
 

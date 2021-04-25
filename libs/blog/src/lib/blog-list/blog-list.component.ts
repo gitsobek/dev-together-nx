@@ -17,17 +17,11 @@ export class BlogListComponent implements OnInit {
   query$: Observable<ArticleQuery>;
   articles$: Observable<Article[]>;
 
-  abc: any;
-  xyz: any;
-
   constructor(private blogFacade: BlogFacade) {}
 
   ngOnInit(): void {
     this.articles$ = this.blogFacade.articles$;
     this.query$ = this.blogFacade.query$;
-
-    this.blogFacade.query$.subscribe(x => this.abc = x);
-    this.blogFacade.articles$.subscribe(x => this.xyz = x);
   }
 
   navigateToArticle(slug: string) {

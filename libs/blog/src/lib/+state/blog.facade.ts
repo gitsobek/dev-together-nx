@@ -43,10 +43,6 @@ export class BlogFacade {
     this.store.dispatch(BlogActions.setArticlesType({ listType: type }));
   }
 
-  setFavorite(slug: string, status: boolean) {
-    this.store.dispatch(BlogActions.setFavoriteArticle({ slug, status }));
-  }
-
   navigateToArticle(slug: string) {
     this.store.dispatch(go({ to: { path: ['/article', slug] } }));
   }

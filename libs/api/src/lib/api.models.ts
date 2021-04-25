@@ -1,5 +1,5 @@
 import { User } from '@dev-together/auth';
-import { Article } from '@dev-together/article';
+import { Article, Comment, Profile } from '@dev-together/article';
 import { HttpErrorResponse } from '@angular/common/http';
 
 interface Response {
@@ -15,9 +15,17 @@ export interface UserResponse extends Response {
 }
 
 export interface ProfileResponse extends Response {
-  profile: object;
+  profile: Profile;
 }
 
 export interface ArticleResponse extends Response {
   article: Article;
+}
+
+export interface CommentResponse extends Response {
+  comment: Comment;
+}
+
+export interface CommentsResponse extends Response {
+  comments: Comment[];
 }

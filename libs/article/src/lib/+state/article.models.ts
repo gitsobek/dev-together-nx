@@ -1,3 +1,5 @@
+import { User } from "@dev-together/auth";
+
 export interface Article {
   slug: string;
   title: string;
@@ -11,9 +13,11 @@ export interface Article {
   author: Profile;
 }
 
-export interface Profile {
-  username: string;
-  bio: string;
-  image: string;
-  following: boolean;
+export type Profile = Omit<User, 'token' | 'email'> & { following: boolean };
+
+export interface Comment {
+  id: number;
+  body: string;
+  createdAt: string;
+  author: Profile;
 }

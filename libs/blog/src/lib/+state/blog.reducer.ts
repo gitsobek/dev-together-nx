@@ -110,10 +110,6 @@ const reducer = createReducer(
     };
     return { ...state, articles };
   }),
-  on(BlogActions.setFavoriteArticleSuccess, (state, action) => ({
-    ...state,
-    articles: updateArticles(state.articles, action.article),
-  })),
   on(BlogActions.loadTagsSuccess, (state, action) => ({
     ...state,
     tags: ['All', ...action.tags]
@@ -123,25 +119,6 @@ const reducer = createReducer(
     tags: ['All']
   }))
 );
-
-function updateArticles(
-  articles: ArticleCollectionState,
-  payload: Article
-): ArticleCollectionState {
-  const idx = articles.entities.findIndex((a) => a.slug === payload.slug);
-  const entities = [
-    ...articles.entities.slice(0, idx),
-    Object.assign({}, articles.entities[idx], payload),
-    ...articles.entities.slice(idx + 1),
-  ];
-  return {
-    ...articles,
-    entities,
-    loading: false,
-    loaded: true,
-    hasError: false,
-  };
-}
 
 export function blogReducer(state: Blog | undefined, action: Action): Blog {
   return reducer(state, action);
