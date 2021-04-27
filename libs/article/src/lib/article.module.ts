@@ -14,6 +14,8 @@ import { ArticleEffects } from './+state/article.effects';
 import { FormsModule } from '@angular/forms';
 import { Article } from './shared/article.abstract';
 import { MockArticleService } from './shared/mock-article.service';
+import { ArticleFacade } from './+state/article.facade';
+import { BLOG_ACTION_PROVIDER } from '@dev-together/shared';
 
 @NgModule({
   imports: [
@@ -21,8 +23,9 @@ import { MockArticleService } from './shared/mock-article.service';
     RouterModule.forChild([
       {
         path: '',
+        pathMatch: 'full',
         component: ArticleComponent,
-        resolve: ArticleResolver,
+        resolve: { ArticleResolver },
       },
     ]),
     StoreModule.forFeature(articleFeatureKey, articleReducer, {
@@ -33,9 +36,11 @@ import { MockArticleService } from './shared/mock-article.service';
   ],
   providers: [
     ArticleEffects,
+    ArticleFacade,
     { provide: Article, useClass: MockArticleService },
     ArticleResolver,
     ArticleEffects,
+    BLOG_ACTION_PROVIDER,
   ],
   declarations: [ArticleComponent],
 })

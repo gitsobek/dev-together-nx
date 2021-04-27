@@ -6,6 +6,7 @@ import {
 } from '@dev-together/api';
 import { asyncScheduler, Observable, scheduled } from 'rxjs';
 import { delay, take } from 'rxjs/operators';
+import { DB } from '../fake-db';
 
 export interface IBlogActions {
   followUser: (userId: string) => Observable<ProfileResponse>;
@@ -28,9 +29,34 @@ export class MockBlogActionsService implements IBlogActions {
   constructor() {}
 
   followUser(userId: string): Observable<ProfileResponse> {
+    const { articles, users } = DB;
+
+    const profileIndex = users.findIndex((user) => user.id === userId);
+
+    const newUsers = [
+      ...users.slice(0, profileIndex),
+      Object.assign({}, users[profileIndex], {
+        following: !users[profileIndex].following,
+      }),
+      ...users.slice(profileIndex + 1),
+    ];
+
+    DB.users = newUsers;
+
+    const newArticles = articles.map((article) =>
+      article.author.id === userId
+        ? {
+            ...article,
+            author: { ...article.author, following: !article.author.following },
+          }
+        : { ...article }
+    );
+
+    DB.articles = newArticles;
+
     const response = {
       code: 200,
-      profile: null,
+      profile: newUsers[profileIndex],
     };
 
     return scheduled([response], asyncScheduler).pipe(delay(500), take(1));

@@ -18,7 +18,6 @@ export class MockBlogService extends Blog {
     const { type, pageIndex = 1, filters } = config;
 
     const { articles } = DB;
-    console.log('articles?', articles);
 
     let response: { articles: Article[]; count: number } =
       type === 'ALL'

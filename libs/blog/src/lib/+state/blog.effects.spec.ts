@@ -22,7 +22,6 @@ describe('BlogEffects', () => {
   let effects: BlogEffects;
   let service: Blog;
   let blogFacade: BlogFacade;
-  let blogActionsService: IBlogActions;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -55,11 +54,7 @@ describe('BlogEffects', () => {
               },
             }),
           },
-        },
-        {
-          provide: BLOG_ACTION_TOKEN,
-          useClass: MockBlogActionsService,
-        },
+        }
       ],
     });
 
@@ -67,13 +62,13 @@ describe('BlogEffects', () => {
     actions$ = TestBed.inject(Actions);
     service = TestBed.inject(Blog);
     blogFacade = TestBed.inject(BlogFacade);
-    blogActionsService = TestBed.inject(BLOG_ACTION_TOKEN);
   });
 
   describe('loadArticles$', () => {
     it('should dispatch a LoadArticlesSuccess action when service call succeeds', () => {
       const singleArticle: Article = {
         author: {
+          id: '1',
           username: 'Piotr Sobuś',
           bio: null,
           image:

@@ -49,7 +49,7 @@ export const setFavoriteArticleFail = createAction(
 
 export const setFollowUser = createAction(
   '[Article] FOLLOW_USER',
-  props<{ username: string }>()
+  props<{ id: string }>()
 );
 export const setFollowUserSuccess = createAction(
   '[Article] FOLLOW_USER_SUCCESS',

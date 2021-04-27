@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BLOG_ACTION_PROVIDER } from '@dev-together/shared';
 import { Blog } from './shared/blog.abstract';
 import { MockBlogService } from './shared/mock-blog.service';
 import { EffectsModule } from '@ngrx/effects';
@@ -26,7 +25,6 @@ import { RouterModule } from '@angular/router';
     EffectsModule.forFeature([BlogEffects]),
   ],
   providers: [
-    BLOG_ACTION_PROVIDER,
     { provide: Blog, useClass: MockBlogService },
     BlogFacade,
   ],

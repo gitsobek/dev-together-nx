@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { ArticleService } from '../shared/article.service';
-import { BlogActionsService } from '@dev-together/shared';
+import { BlogActionsService, BLOG_ACTION_TOKEN, IBlogActions } from '@dev-together/shared';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import {
@@ -90,9 +90,9 @@ export class ArticleEffects {
   follow$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ArticleActions.setFollowUser),
-      map((action) => action.username),
-      concatMap((username) =>
-        this.actionsService.followUser(username).pipe(
+      map((action) => action.id),
+      concatMap((id) =>
+        this.blogActionsService.followUser(id).pipe(
           map((response) =>
             ArticleActions.setFollowUserSuccess({ profile: response.profile })
           ),
@@ -105,6 +105,6 @@ export class ArticleEffects {
   constructor(
     private actions$: Actions,
     private articleService: Article,
-    private actionsService: BlogActionsService,
+    @Inject(BLOG_ACTION_TOKEN) private blogActionsService: IBlogActions
   ) {}
 }

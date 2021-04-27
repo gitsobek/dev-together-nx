@@ -39,8 +39,8 @@ export class ArticleFacade {
     this.store.dispatch(ArticleActions.deleteComment(data));
   }
 
-  setFollowUser(username: string) {
-    this.store.dispatch(ArticleActions.setFollowUser({ username }));
+  setFollowUser(userId: string) {
+    this.store.dispatch(ArticleActions.setFollowUser({ id: userId }));
   }
 
   setFavoriteArticle(slug: string) {

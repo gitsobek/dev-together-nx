@@ -1,1 +1,62 @@
-<p>article works!</p>
+<article *ngIf="article$ | async as article">
+  <section>
+    <header>
+      <div>
+        <img [src]="article.author?.image" />
+        <p>{{ article.author?.username }}</p>
+      </div>
+
+      <div>
+        <p>Published: {{ article.createdAt | date }}</p>
+      </div>
+    </header>
+
+    <h1>{{ article.title }}</h1>
+
+    <h2>
+      {{ article.body }}
+    </h2>
+
+    <div class="footer">
+      <ul>
+        <li *ngFor="let tag of article.tags">#{{ tag | lowercase }}</li>
+      </ul>
+
+      <div *ngIf="isLoggedIn$ | async" class="action-buttons">
+        <ng-container *ngIf="canEdit; else defaultBtns">
+          <span>Edit your article</span>
+        </ng-container>
+
+        <ng-template #defaultBtns>
+          <div class="action-btn">
+            <i
+              class="{{ article.favorited ? 'fas' : 'far' }} fa-heart"
+              [class.liked]="article.favorited"
+              (click)="favorite(article.slug)"
+            ></i>
+            <span>{{ article.favorites }}</span>
+          </div>
+
+          <div class="action-btn">
+            <i
+              class="fas {{
+                article.author?.following ? 'fa-user-times' : 'fa-user-plus'
+              }}"
+              [class.followed]="article.author?.following"
+              (click)="follow(article.author?.id)"
+            ></i>
+            <span>{{ article.author?.following ? 'Unfollow' : 'Follow' }}</span>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <hr class="separator" data-content="COMMENTS" />
+
+    <div *ngIf="isLoggedIn$ | async; else noAuth"></div>
+
+    <ng-template #noAuth>
+      <div class="warning">Please <span routerLink="/login">login</span> in order to post a comment.</div>
+    </ng-template>
+  </section>
+</article>

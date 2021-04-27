@@ -24,6 +24,6 @@
     <ul>
       <li *ngFor="let tag of article.tags">#{{ tag | lowercase }}</li>
     </ul>
-    <p>Read more</p>
+    <p (click)="navigateToArticle.emit(article.slug)">Read more</p>
   </div>
 </article>

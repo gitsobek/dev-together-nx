@@ -15,13 +15,5 @@ import { Article } from '@dev-together/article';
 })
 export class BlogListItemComponent {
   @Input() article: Article;
-  @Output() setFavorite: EventEmitter<{
-    slug: string;
-    status: boolean;
-  }> = new EventEmitter();
   @Output() navigateToArticle: EventEmitter<string> = new EventEmitter();
-
-  toggleFavorite(article: Article) {
-    this.setFavorite.emit({ slug: article.slug, status: !article.favorited });
-  }
 }

@@ -29,7 +29,7 @@ const articles = [
       ...a,
       author: {
         ...a.author,
-        id: parseInt(a.author.id) + i + 1 + '',
+        id: '2',
         username: 'Piotr Sobuś',
         image:
           'https://miro.medium.com/fit/c/262/262/2*N3XfPb2_Vs2dZpqDwkUFzA.jpeg',
@@ -44,4 +44,21 @@ export const DB = {
     (acc, curr: Article) => ({ ...acc, [curr.slug]: [] }),
     {}
   ),
+  users: [
+    {
+      id: '1',
+      username: 'Jan Kowalski',
+      bio: null,
+      image: 'https://www.w3schools.com/w3css/img_avatar3.png',
+      following: false,
+    },
+    {
+      id: '2',
+      username: 'Piotr Sobuś',
+      bio: null,
+      image:
+        'https://miro.medium.com/fit/c/262/262/2*N3XfPb2_Vs2dZpqDwkUFzA.jpeg',
+      following: false,
+    },
+  ],
 };
