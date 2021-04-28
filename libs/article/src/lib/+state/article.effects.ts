@@ -1,16 +1,22 @@
 import { Inject, Injectable } from '@angular/core';
 import { ArticleService } from '../shared/article.service';
-import { BlogActionsService, BLOG_ACTION_TOKEN, IBlogActions } from '@dev-together/shared';
+import { BLOG_ACTION_TOKEN, IBlogActions } from '@dev-together/shared';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { of } from 'rxjs';
+import { from, of } from 'rxjs';
 import {
   catchError,
   concatMap,
+  filter,
   map,
+  switchMap,
+  tap,
+  withLatestFrom,
 } from 'rxjs/operators';
 import * as ArticleActions from './article.actions';
 import { go } from '@dev-together/router';
 import { Article } from '../shared/article.abstract';
+import { FormsFacade } from '@dev-together/forms';
+import * as fromForms from '@dev-together/forms';
 
 @Injectable()
 export class ArticleEffects {
@@ -49,6 +55,23 @@ export class ArticleEffects {
             ArticleActions.loadCommentsSuccess({ comments: data.comments })
           ),
           catchError((error) => of(ArticleActions.loadCommentsFail(error)))
+        )
+      )
+    )
+  );
+
+  addComment$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ArticleActions.addComment),
+      tap(() => this.formsFacade.submitForm()),
+      withLatestFrom(this.formsFacade.isValid$, this.formsFacade.data$),
+      filter(([_, valid]) => !!valid),
+      concatMap(([action, _, data]) =>
+        this.articleService.addComment(action.slug, data.comment).pipe(
+          switchMap((response) =>
+            from([ArticleActions.addCommentSuccess({ comment: response.comment }), fromForms.resetForm()])
+          ),
+          catchError((error) => of(ArticleActions.addCommentFail(error)))
         )
       )
     )
@@ -105,6 +128,7 @@ export class ArticleEffects {
   constructor(
     private actions$: Actions,
     private articleService: Article,
+    private formsFacade: FormsFacade,
     @Inject(BLOG_ACTION_TOKEN) private blogActionsService: IBlogActions
   ) {}
 }

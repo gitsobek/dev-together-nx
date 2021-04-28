@@ -42,7 +42,7 @@ const reducer = createReducer(
   })),
   on(FormsActions.submitForm, (state, _) => ({ ...state, submitted: true })),
   on(FormsActions.validateForm, (state, action) => ({ ...state, valid: action.valid })),
-  on(FormsActions.resetForm, (state, _) => ({ ...state, touched: false, submitted: false }))
+  on(FormsActions.resetForm, (state, _) => ({ ...state, data: null, touched: false, submitted: false }))
 );
 
 export function formsReducer(state: Form, action: Action): Form {

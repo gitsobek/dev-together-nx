@@ -1,0 +1,59 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  width: 40vw;
+  height: 40vh;
+  background-color: white;
+  border-radius: 8px;
+  padding: 25px 16px;
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-self: center;
+    height: 100%;
+    position: relative;
+
+    .close-btn {
+      position: absolute;
+      padding: 0 2px;
+      background: none;
+      border: 0;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 20px;
+      right: 10px;
+      outline: none;
+    
+      &:focus-visible {
+        box-shadow: 0 0 2px white;
+      }
+    }
+
+    > span {
+      justify-self: center;
+      text-align: center;
+      padding: 0 20px;
+      margin: auto 0;
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-evenly;
+      width: 100%;
+    }
+  }
+}

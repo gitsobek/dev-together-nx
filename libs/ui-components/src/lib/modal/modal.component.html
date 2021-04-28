@@ -1,0 +1,26 @@
+<ng-content></ng-content>
+
+<div *ngIf="modalService.modal$$ | async as modal" class="overlay">
+  <div class="modal" (modalClose)="modalService.close$$.next(null)">
+    <div class="content">
+      <button type="button" class="close-btn" (click)="modalService.close$$.next(null)">&#x2715;</button>
+      <span>{{ modal.content }}</span>
+      <div *ngIf="modal.showButtons" class="buttons">
+        <button
+          dev-together-button-retro
+          text="Yes"
+          insideColor="#2acdc1"
+          hoverColor="#f04f65"
+          (click)="modalService.close$$.next(true)"
+        ></button>
+        <button
+          dev-together-button-retro
+          text="No"
+          insideColor="#f04f65"
+          hoverColor="#2acdc1"
+          (click)="modalService.close$$.next(false)"
+        ></button>
+      </div>
+    </div>
+  </div>
+</div>

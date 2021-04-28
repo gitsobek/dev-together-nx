@@ -1,0 +1,51 @@
+<section>
+  <div *ngIf="isLoggedIn; else noAuth">
+    <section *ngIf="comments?.length > 0" class="comments">
+      <div *ngFor="let comment of comments" class="comment">
+        <header>
+          <div>
+            <img [src]="comment.author?.image" />
+            <p>{{ comment.author?.username }}</p>
+            <span
+              *ngIf="currentUser?.id === comment.author?.id"
+              class="delete-comment"
+              (click)="deleteComment.emit({ slug: article.slug, commentId: comment.id })"
+              >Delete comment</span
+            >
+          </div>
+          <div>
+            <p>{{ comment.createdAt | date }}</p>
+          </div>
+        </header>
+
+        <div>
+          {{ comment.body }}
+        </div>
+      </div>
+    </section>
+    <dev-together-form
+      [data$]="data$"
+      [form$]="form$"
+      (updateForm)="updateForm.emit($event)"
+    >
+    </dev-together-form>
+
+    <dev-together-errors></dev-together-errors>
+
+    <button
+      dev-together-button-retro
+      text="Post"
+      insideColor="#f04f65"
+      hoverColor="#2acdc1"
+      [loading]="isCommentsLoading$ | async"
+      (click)="addComment.emit(article.slug)"
+      class="add-btn"
+    ></button>
+  </div>
+
+  <ng-template #noAuth>
+    <div class="warning">
+      Please <span routerLink="/login">login</span> in order to post a comment.
+    </div>
+  </ng-template>
+</section>

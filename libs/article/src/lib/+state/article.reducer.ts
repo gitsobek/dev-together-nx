@@ -10,6 +10,9 @@ export interface ArticleState {
   loading: boolean;
   loaded: boolean;
   hasError: boolean;
+  commentsLoaded: boolean;
+  commentsLoading: boolean;
+  commentsHasError: boolean;
 }
 
 export interface ArticleRootState {
@@ -39,6 +42,9 @@ export const articleInitialState: ArticleState = {
   loaded: false,
   loading: false,
   hasError: false,
+  commentsLoaded: false,
+  commentsLoading: false,
+  commentsHasError: false,
 };
 
 const reducer = createReducer(
@@ -75,10 +81,21 @@ const reducer = createReducer(
     ...state,
     comments: articleInitialState.comments,
   })),
+  on(ArticleActions.addComment, (state, _) => ({
+    ...state,
+    commentsLoading: true,
+  })),
   on(ArticleActions.addCommentSuccess, (state, action) => {
     const comments: Comment[] = [action.comment, ...state.comments];
-    return { ...state, comments };
+    return { ...state, comments, commentsLoaded: true, commentsLoading: false };
   }),
+  on(ArticleActions.addCommentFail, (state, _) => ({
+    ...state,
+    comments: articleInitialState.comments,
+    commentsLoaded: false,
+    commentsLoading: false,
+    commentsHasError: true,
+  })),
   on(ArticleActions.deleteCommentSuccess, (state, action) => {
     const comments: Comment[] = state.comments.filter(
       (item) => item.id !== action.commentId

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UserResponse } from '@dev-together/api';
+import { DB } from '@dev-together/shared';
 import { asyncScheduler, Observable, of, scheduled, throwError } from 'rxjs';
 import { delay, switchMap, take } from 'rxjs/operators';
 import { LoginUser, RegisterUser, User } from '../+state/auth.models';
@@ -83,16 +84,31 @@ export class MockAuthService extends Auth {
   }
 
   register(credentials: RegisterUser): Observable<UserResponse> {
-    this.users.push({
-      id: (this.users.length + 1) + '',
+    const user = {
+      id: this.users.length + 1 + '',
       email: credentials.email,
       token: '',
       username: credentials.username,
       bio: '',
-      image: '',
-    });
+      image: '/assets/no-user.png',
+    };
 
+    this.users.push(user);
     this.storageService.setItem('IM_USERS', this.users);
+
+    const { users } = DB;
+    const newUsers = [
+      ...users,
+      {
+        id: user.id,
+        bio: user.bio,
+        following: false,
+        image: user.image,
+        username: user.username,
+      },
+    ];
+
+    DB.users = newUsers;
 
     const res = {
       code: 200,

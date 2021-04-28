@@ -1,9 +1,24 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Article, Comment } from '../+state/article.models';
 import { ArticleFacade } from '../+state/article.facade';
-import { AuthFacade } from '@dev-together/auth';
+import { AuthFacade, User } from '@dev-together/auth';
 import { combineLatest, Observable, Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+import { filter, first, takeUntil, tap } from 'rxjs/operators';
+import { Field, FormsFacade } from '@dev-together/forms';
+import { Validators } from '@angular/forms';
+import { ModalService } from '@dev-together/ui-components';
+
+const commentStructure: Field[] = [
+  {
+    type: 'TEXTAREA',
+    name: 'comment',
+    placeholder: 'Write a comment...',
+    validator: [Validators.required],
+    attrs: {
+      rows: 3,
+    },
+  },
+];
 
 @Component({
   selector: 'dev-together-article',
@@ -14,15 +29,20 @@ import { filter, takeUntil } from 'rxjs/operators';
 export class ArticleComponent implements OnInit {
   article$: Observable<Article>;
   comments$: Observable<Comment[]>;
-
+  currentUser$: Observable<User>;
+  data$: Observable<any>;
+  form$: Observable<Field[]>;
   isLoggedIn$: Observable<boolean>;
+  isCommentsLoading$: Observable<boolean>;
 
   canEdit: boolean = false;
   unsubscribe$: Subject<void>;
 
   constructor(
     private authFacade: AuthFacade,
-    private articleFacade: ArticleFacade
+    private formsFacade: FormsFacade,
+    private articleFacade: ArticleFacade,
+    private modalService: ModalService
   ) {
     this.unsubscribe$ = new Subject<void>();
   }
@@ -30,7 +50,9 @@ export class ArticleComponent implements OnInit {
   ngOnInit(): void {
     this.article$ = this.articleFacade.article$;
     this.comments$ = this.articleFacade.comments$;
+    this.isCommentsLoading$ = this.articleFacade.isCommentsLoading$;
 
+    this.currentUser$ = this.authFacade.user$;
     this.isLoggedIn$ = this.authFacade.isLoggedIn$;
     this.authFacade.auth$
       .pipe(
@@ -42,6 +64,12 @@ export class ArticleComponent implements OnInit {
         ([auth, author]) =>
           (this.canEdit = auth.user.username === author.username)
       );
+
+    this.data$ = this.formsFacade.data$;
+    this.form$ = this.formsFacade.form$;
+
+    this.formsFacade.setForm(commentStructure);
+    this.formsFacade.setData(null);
   }
 
   favorite(slug: string): void {
@@ -52,8 +80,34 @@ export class ArticleComponent implements OnInit {
     this.articleFacade.setFollowUser(userId);
   }
 
+  onCommentAdd(slug: string) {
+    this.articleFacade.addComment(slug);
+  }
+
+  onCommentDelete(data: { slug: string; commentId: number }) {
+    this.modalService
+      .open({
+        content: 'Are you sure you want to delete this comment?',
+        showButtons: true,
+      })
+      .pipe(
+        first(),
+        tap(
+          (action: boolean | null) =>
+            action && this.articleFacade.deleteComment(data)
+        )
+      )
+      .subscribe();
+  }
+
+  onFormUpdate(changes: any) {
+    this.formsFacade.updateData(changes);
+  }
+
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+
+    this.articleFacade.initializeArticle();
   }
 }

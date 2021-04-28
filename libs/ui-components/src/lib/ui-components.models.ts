@@ -4,3 +4,9 @@ export interface TabSwitchConfig {
   name: string;
   type: ListType;
 }
+
+export interface ModalConfig {
+  headerText?: string;
+  content: string;
+  showButtons?: boolean;
+}

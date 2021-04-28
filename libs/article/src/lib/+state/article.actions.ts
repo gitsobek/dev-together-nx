@@ -89,7 +89,7 @@ export const addCommentSuccess = createAction(
 
 export const deleteComment = createAction(
   '[Article] DELETE_COMMENT',
-  props<{ commentId: number; slug: string }>()
+  props<{ slug: string, commentId: number }>()
 );
 export const deleteCommentFail = createAction(
   '[Article] DELETE_COMMENT_FAIL',

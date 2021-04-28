@@ -11,15 +11,18 @@ import {
   articleReducer,
 } from './+state/article.reducer';
 import { ArticleEffects } from './+state/article.effects';
-import { FormsModule } from '@angular/forms';
+import { FormsModule } from '@dev-together/forms';
 import { Article } from './shared/article.abstract';
 import { MockArticleService } from './shared/mock-article.service';
 import { ArticleFacade } from './+state/article.facade';
 import { BLOG_ACTION_PROVIDER } from '@dev-together/shared';
+import { ArticleCommentsComponent } from './article-comments/article-comments.component';
+import { UiElementsModule } from '@dev-together/ui-elements';
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule.forChild([
       {
         path: '',
@@ -32,7 +35,7 @@ import { BLOG_ACTION_PROVIDER } from '@dev-together/shared';
       initialState: articleInitialState,
     }),
     EffectsModule.forFeature([ArticleEffects]),
-    FormsModule,
+    UiElementsModule
   ],
   providers: [
     ArticleEffects,
@@ -42,6 +45,6 @@ import { BLOG_ACTION_PROVIDER } from '@dev-together/shared';
     ArticleEffects,
     BLOG_ACTION_PROVIDER,
   ],
-  declarations: [ArticleComponent],
+  declarations: [ArticleComponent, ArticleCommentsComponent],
 })
 export class ArticleModule {}

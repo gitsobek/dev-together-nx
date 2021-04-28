@@ -1,41 +1,43 @@
-<dev-together-snackbar
-  *ngFor="let item of snackbarService | async"
-  [observer]="item.observer"
->
-  {{ item.content }}
-</dev-together-snackbar>
+<dev-together-modal>
+  <dev-together-snackbar
+    *ngFor="let item of snackbarService | async"
+    [observer]="item.observer"
+  >
+    {{ item.content }}
+  </dev-together-snackbar>
 
-<dev-together-navbar [isLogged]="isLoggedIn$ | async" [user]="user$ | async">
-  <ng-template appLoggedIn let-user>
-    <span class="user-txt">{{ user?.username }}</span>
-    <div class="avatar">
-      <img [src]="user.image || '/assets/no-user.png'" />
-    </div>
-  </ng-template>
-
-  <ng-template appNotLoggedIn>
-    <ng-container *ngIf="buttonsHide$ | async; else showButtons">
-      <p class="action-text" routerLink="/login">Login</p>      
-      <p class="action-text" routerLink="/register">Register</p>
-    </ng-container>
-
-    <ng-template #showButtons>
-      <button
-        dev-together-button-retro
-        text="Login"
-        insideColor="#2acdc1"
-        hoverColor="#f04f65"
-        routerLink="/login"
-      ></button>
-      <button
-        dev-together-button-retro
-        text="Register"
-        insideColor="#f04f65"
-        hoverColor="#2acdc1"
-        routerLink="/register"
-      ></button>
+  <dev-together-navbar [isLogged]="isLoggedIn$ | async" [user]="user$ | async">
+    <ng-template appLoggedIn let-user>
+      <span class="user-txt">{{ user?.username }}</span>
+      <div class="avatar">
+        <img [src]="user.image || '/assets/no-user.png'" />
+      </div>
     </ng-template>
-  </ng-template>
-</dev-together-navbar>
 
-<router-outlet></router-outlet>
+    <ng-template appNotLoggedIn>
+      <ng-container *ngIf="buttonsHide$ | async; else showButtons">
+        <p class="action-text" routerLink="/login">Login</p>
+        <p class="action-text" routerLink="/register">Register</p>
+      </ng-container>
+
+      <ng-template #showButtons>
+        <button
+          dev-together-button-retro
+          text="Login"
+          insideColor="#2acdc1"
+          hoverColor="#f04f65"
+          routerLink="/login"
+        ></button>
+        <button
+          dev-together-button-retro
+          text="Register"
+          insideColor="#f04f65"
+          hoverColor="#2acdc1"
+          routerLink="/register"
+        ></button>
+      </ng-template>
+    </ng-template>
+  </dev-together-navbar>
+
+  <router-outlet></router-outlet>
+</dev-together-modal>

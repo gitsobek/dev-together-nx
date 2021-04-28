@@ -24,6 +24,10 @@ export const getAuthor = createSelector(
   articleFeatureSelector,
   (state: ArticleState) => state.data.author
 );
+export const isCommentsLoading = createSelector(
+  articleFeatureSelector,
+  (state: ArticleState) => state.commentsLoading
+);
 
 export const articleQuery = {
   getArticle,
@@ -31,4 +35,5 @@ export const articleQuery = {
   hasArticleError,
   isArticleLoaded,
   getAuthor,
+  isCommentsLoading
 };

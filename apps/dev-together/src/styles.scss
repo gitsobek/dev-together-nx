@@ -27,3 +27,27 @@ p {
   transform: translate3d(0, -100%, 0);
   transition: transform 0.3s 0.5s;
 }
+
+.warning {
+  font-size: 15px;
+  font-weight: 300;
+  text-align: center;
+
+  > span {
+    color: #04049d;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &:focus-visible {
+      border: 1px solid #04049d;
+      border-radius: 5px;
+    }
+  }
+}
