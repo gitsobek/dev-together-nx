@@ -89,6 +89,7 @@ describe('AuthEffects', () => {
   describe('getUser$', () => {
     it('should dispatch a GetUserSuccess action when service call succeeds', () => {
       const result: User = {
+        id: '1',
         email: 'test@test.com',
         token: 'token',
         username: 'test',
@@ -129,6 +130,7 @@ describe('AuthEffects', () => {
   describe('login$', () => {
     it('should dispatch a LoginSuccess action with user information when login succeeds', () => {
       const result: User = {
+        id: '1',
         email: 'test@test.com',
         token: 'token',
         username: 'test',
@@ -171,6 +173,7 @@ describe('AuthEffects', () => {
   describe('register$', () => {
     it('should dispatch a RegisterSuccess action with user information when registration succeeds', () => {
       const result: User = {
+        id: '1',
         email: 'test@test.com',
         token: 'token',
         username: 'test',
@@ -215,6 +218,7 @@ describe('AuthEffects', () => {
   describe('loginSuccess$', () => {
     it('should dispatch a RouterNavigation action when login succeeds and save token in storage', (done: any) => {
       const result: User = {
+        id: '1',
         email: 'test@test.com',
         token: 'token',
         username: 'test',
@@ -237,6 +241,7 @@ describe('AuthEffects', () => {
   describe('registerSuccess$', () => {
     it('should dispatch a RouterNavigation action when register succeeds', (done: any) => {
       const result: User = {
+        id: '1',
         email: 'test@test.com',
         token: 'token',
         username: 'test',

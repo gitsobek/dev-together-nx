@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Directive, ElementRef, Inject, Output } from '@angular/core';
 import { fromEvent, merge, Observable } from 'rxjs';
-import { filter, switchMapTo, take } from 'rxjs/operators';
+import { filter, switchMapTo, take, tap } from 'rxjs/operators';
 
 @Directive({
   selector: '[modalClose]',
@@ -17,7 +17,7 @@ export class ModalCloseDirective {
     const esc$: Observable<unknown> = fromEvent<KeyboardEvent>(
       documentRef,
       'keydown'
-    ).pipe(filter(({ key }) => key === 'Escape'));
+    ).pipe(tap(x => console.log(x)), filter(({ key }) => key === 'Escape'));
 
     const clickOutside$ = fromEvent<MouseEvent>(documentRef, 'mousedown').pipe(
       filter(

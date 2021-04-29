@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { filter, take, tap } from 'rxjs/operators';
 import { ArticleFacade } from './+state/article.facade';
 

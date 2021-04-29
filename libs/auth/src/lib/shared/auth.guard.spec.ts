@@ -3,6 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Component } from '@angular/core';
 import { LocalStorageService, StorageService } from '../shared/storage.service';
 import { AuthGuardService } from './auth.guard';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-test-comp',
@@ -13,6 +14,7 @@ class TestComponent {}
 describe('AuthGuardService', () => {
   let storage: StorageService;
   let guard: AuthGuardService;
+  let router: Router;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -35,10 +37,13 @@ describe('AuthGuardService', () => {
     });
     storage = TestBed.inject(StorageService);
     guard = TestBed.inject(AuthGuardService);
+    router = TestBed.inject(Router);
   });
 
   it('should return false if the user state is not logged in', () => {
+    const navigateSpy = spyOn(router, 'navigate');
     expect(guard.canActivate()).toBe(false);
+    expect(navigateSpy).toHaveBeenCalledWith(['/login']);
   });
 
   it('should return true if the user state is logged in', () => {

@@ -32,6 +32,10 @@ export class ArticleFacade {
     this.store.dispatch(ArticleActions.deleteArticle({ slug }));
   }
 
+  setCommentStatus() {
+    this.store.dispatch(ArticleActions.setCommentStatus());
+  }
+
   loadComments(slug: string) {
     this.store.dispatch(ArticleActions.loadComments({ slug }));
   }

@@ -81,9 +81,9 @@ const reducer = createReducer(
     ...state,
     comments: articleInitialState.comments,
   })),
-  on(ArticleActions.addComment, (state, _) => ({
+  on(ArticleActions.setCommentStatus, (state, _) => ({
     ...state,
-    commentsLoading: true,
+    commentsLoading: !state.commentsLoading,
   })),
   on(ArticleActions.addCommentSuccess, (state, action) => {
     const comments: Comment[] = [action.comment, ...state.comments];

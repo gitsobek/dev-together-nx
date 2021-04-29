@@ -86,10 +86,11 @@ export const addCommentSuccess = createAction(
   '[Article] ADD_COMMENT_SUCCESS',
   props<{ comment: Comment }>()
 );
+export const setCommentStatus = createAction('[Article] SET_COMMENT_STATUS');
 
 export const deleteComment = createAction(
   '[Article] DELETE_COMMENT',
-  props<{ slug: string, commentId: number }>()
+  props<{ slug: string; commentId: number }>()
 );
 export const deleteCommentFail = createAction(
   '[Article] DELETE_COMMENT_FAIL',

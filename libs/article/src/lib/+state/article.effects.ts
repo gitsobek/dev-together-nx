@@ -17,6 +17,7 @@ import { go } from '@dev-together/router';
 import { Article } from '../shared/article.abstract';
 import { FormsFacade } from '@dev-together/forms';
 import * as fromForms from '@dev-together/forms';
+import { ArticleFacade } from './article.facade';
 
 @Injectable()
 export class ArticleEffects {
@@ -66,6 +67,7 @@ export class ArticleEffects {
       tap(() => this.formsFacade.submitForm()),
       withLatestFrom(this.formsFacade.isValid$, this.formsFacade.data$),
       filter(([_, valid]) => !!valid),
+      tap(() => this.articleFacade.setCommentStatus()),
       concatMap(([action, _, data]) =>
         this.articleService.addComment(action.slug, data.comment).pipe(
           switchMap((response) =>
@@ -128,6 +130,7 @@ export class ArticleEffects {
   constructor(
     private actions$: Actions,
     private articleService: Article,
+    private articleFacade: ArticleFacade,
     private formsFacade: FormsFacade,
     @Inject(BLOG_ACTION_TOKEN) private blogActionsService: IBlogActions
   ) {}
