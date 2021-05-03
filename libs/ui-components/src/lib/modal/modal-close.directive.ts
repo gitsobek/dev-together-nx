@@ -17,7 +17,7 @@ export class ModalCloseDirective {
     const esc$: Observable<unknown> = fromEvent<KeyboardEvent>(
       documentRef,
       'keydown'
-    ).pipe(tap(x => console.log(x)), filter(({ key }) => key === 'Escape'));
+    ).pipe(filter(({ key }) => key === 'Escape'));
 
     const clickOutside$ = fromEvent<MouseEvent>(documentRef, 'mousedown').pipe(
       filter(

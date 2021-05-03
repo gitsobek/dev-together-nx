@@ -11,6 +11,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('@dev-together/article').then((m) => m.ArticleModule),
   },
+  {
+    path: 'profile/:username',
+    loadChildren: () =>
+      import('@dev-together/profile').then((m) => m.ProfileModule),
+  },
 ];
 
 @NgModule({

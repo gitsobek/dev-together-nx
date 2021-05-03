@@ -48,6 +48,11 @@ section {
         > p {
           font-size: 12px;
           color: #292929;
+          cursor: pointer;
+
+          &:hover {
+            text-decoration: underline;
+          }
         }
       }
 

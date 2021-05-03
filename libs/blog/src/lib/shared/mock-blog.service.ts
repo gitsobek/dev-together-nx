@@ -43,6 +43,14 @@ export class MockBlogService extends Blog {
       response = { articles, count: articles.length };
     }
 
+    if (filters.author) {
+      const articles = response.articles.filter(
+        (a) => a.author.username === filters.author
+      );
+
+      response = { articles, count: articles.length };
+    }
+
     return scheduled([response], asyncScheduler).pipe(delay(500), take(1));
   }
 

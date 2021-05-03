@@ -16,7 +16,7 @@ export class SnackbarService extends BehaviorSubject<
     super([]);
   }
 
-  show<I, O>(content: I): Observable<boolean> {
+  show<I>(content: I): Observable<boolean> {
     return new Observable((observer: Observer<boolean>) => {
       const notification = {
         content,

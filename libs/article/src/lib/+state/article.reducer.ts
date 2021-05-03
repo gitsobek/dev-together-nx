@@ -36,6 +36,7 @@ export const articleInitialState: ArticleState = {
       bio: '',
       image: '',
       following: false,
+      joinedAt: '',
     },
   },
   comments: [],

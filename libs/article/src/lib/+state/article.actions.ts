@@ -1,6 +1,7 @@
 import { ErrorResponse } from '@dev-together/api';
+import { Profile } from '@dev-together/profile';
 import { createAction, props } from '@ngrx/store';
-import { Article, Comment, Profile } from './article.models';
+import { Article, Comment } from './article.models';
 
 /* -- Article data -- */
 export const initializeArticle = createAction('[Article] INITIALIZE_ARTICLE');

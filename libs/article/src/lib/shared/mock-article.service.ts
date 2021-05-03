@@ -81,7 +81,7 @@ export class MockArticleService extends Article {
     const comment: Comment = {
       id,
       body: payload,
-      createdAt: new Date().toUTCString(),
+      createdAt: new Date().toISOString(),
       author: profile
     };
 

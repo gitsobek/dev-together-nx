@@ -57,7 +57,7 @@ export class MockAuthService extends Auth {
       switchMap((user) => {
         if (user) {
           const token = Math.random().toString(36).substr(2);
-          this.users[idx].token = token;
+          this.users[idx] = { ...this.users[idx], token }
           this.storageService.setItem('IM_USERS', this.users);
 
           return of({
@@ -91,6 +91,7 @@ export class MockAuthService extends Auth {
       username: credentials.username,
       bio: '',
       image: '/assets/no-user.png',
+      joinedAt: new Date().toISOString()
     };
 
     this.users.push(user);

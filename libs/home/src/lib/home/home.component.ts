@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TabSwitchConfig } from '@dev-together/ui-components';
-import { ArticleQuery, BlogFacade, ListType } from '@dev-together/blog';
+import { ArticleQuery, BlogFacade, blogInitialState, ListType } from '@dev-together/blog';
 import { Observable } from 'rxjs';
 import { AuthFacade } from '@dev-together/auth';
-import { MatchMediaService } from '@dev-together/shared';
 
 @Component({
   selector: 'dev-together-home',
@@ -43,7 +42,16 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.blogFacade.setType(this.tabConfig[0].type);
+    const query = {
+      ...blogInitialState.query,
+      filters: {
+        tag: 'All',
+        limit: 10,
+        author: ''
+      }
+    }
+
+    this.blogFacade.setQuery(query);
   }
 
   onBlogTypeSelected(type: ListType): void {

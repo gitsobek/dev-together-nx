@@ -21,7 +21,8 @@ export class BlogEffects {
         BlogActions.setArticlesQuery,
         BlogActions.setArticlesPage,
         BlogActions.setArticlesTag,
-        BlogActions.setArticlesType
+        BlogActions.setArticlesType,
+        BlogActions.setArticlesAuthor
       ),
       map(() => BlogActions.loadArticles())
     )

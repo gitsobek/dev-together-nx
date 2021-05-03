@@ -8,9 +8,14 @@
 
   <dev-together-navbar [isLogged]="isLoggedIn$ | async" [user]="user$ | async">
     <ng-template appLoggedIn let-user>
-      <span class="user-txt">{{ user?.username }}</span>
-      <div class="avatar">
-        <img [src]="user.image || '/assets/no-user.png'" />
+      <div
+        class="user"
+        [routerLink]="['/profile', user.username]"
+      >
+        <span class="user-txt">{{ user?.username }}</span>
+        <div class="user-avatar">
+          <img [src]="user.image || '/assets/no-user.png'" />
+        </div>
       </div>
     </ng-template>
 

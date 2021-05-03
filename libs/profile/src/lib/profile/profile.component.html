@@ -1,0 +1,100 @@
+<section class="profile-section" *ngIf="profile$ | async as profile">
+  <header>
+    <span *ngIf="isCurrentUser" class="info"
+      >(double-click on items to edit)</span
+    >
+    <div>
+      <dev-together-editable
+        [disabled]="!isCurrentUser"
+        (update)="updateField()"
+      >
+        <ng-template viewMode>
+          <img [src]="profile?.image" />
+        </ng-template>
+        <ng-template editMode>
+          <fieldset [formGroup]="formGroup">
+            <input
+              formControlName="image"
+              placeholder="Copy image URL..."
+              focusable
+              editOnEnter
+            />
+          </fieldset>
+        </ng-template>
+      </dev-together-editable>
+      <p>{{ profile.username }}</p>
+    </div>
+
+    <div>
+      <dev-together-editable
+        [disabled]="!isCurrentUser"
+        (update)="updateField()"
+      >
+        <ng-template viewMode>
+          <p>bio: {{ profile.bio ? profile.bio : '-' }}</p>
+        </ng-template>
+        <ng-template editMode>
+          <fieldset [formGroup]="formGroup">
+            <textarea
+              formControlName="bio"
+              rows="5"
+              placeholder="Write your bio..."
+              focusable
+            ></textarea>
+          </fieldset>
+        </ng-template>
+      </dev-together-editable>
+    </div>
+  </header>
+
+  <div class="footer">
+    <div [ngClass]="isCurrentUser ? 'settings' : 'action-buttons'">
+      <ng-container *ngIf="isCurrentUser; else defaultBtns">
+        <span class="user-action">Add article</span>
+        <span (click)="logout()" class="user-action">Logout</span>
+      </ng-container>
+
+      <ng-template #defaultBtns>
+        <div *ngIf="profile$ | async as profile" class="action-btn">
+          <i
+            class="fas {{
+              profile.following ? 'fa-user-times' : 'fa-user-plus'
+            }}"
+            [class.followed]="profile.following"
+            (click)="follow(profile.id)"
+          ></i>
+          <span>{{ profile.following ? 'Unfollow' : 'Follow' }}</span>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+
+  <hr class="separator" data-content="ARTICLES" />
+</section>
+
+<section class="blog-section">
+  <dev-together-spinner
+    *ngIf="isBlogLoading$ | async; else blogListTpl"
+    class="blog-spinner"
+    color="#f04f65"
+    width="100px"
+    height="100px"
+    thickness="10px"
+    position="center"
+  ></dev-together-spinner>
+
+  <ng-template #blogListTpl>
+    <dev-together-blog-list
+      [isLogged]="!!(profile$ | async)"
+      class="blog-list"
+    ></dev-together-blog-list>
+  </ng-template>
+
+  <dev-together-paginator
+    *ngIf="!(isBlogLoading$ | async) && (totalPages$ | async) > 1"
+    [currentPage]="(query$ | async).pageIndex"
+    [totalPages]="totalPages$ | async"
+    (pageSelect)="onPageSelect($event)"
+    class="blog-paginator"
+  ></dev-together-paginator>
+</section>

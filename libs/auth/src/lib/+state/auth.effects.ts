@@ -58,8 +58,8 @@ export class AuthEffects {
       withLatestFrom(this.formsFacade.data$),
       exhaustMap(([_, data]) =>
         this.authService.login(data).pipe(
-          switchMap((data: UserResponse) =>
-            this.snackbarService.show(data.message).pipe(map(() => data))
+          switchMap((response: UserResponse) =>
+            this.snackbarService.show(response.message).pipe(map(() => response))
           ),
           map((response: UserResponse) =>
             AuthActions.loginSuccess({ user: response.user })
@@ -82,8 +82,8 @@ export class AuthEffects {
       withLatestFrom(this.formsFacade.data$),
       exhaustMap(([_, data]) =>
         this.authService.register(data).pipe(
-          switchMap((data: UserResponse) =>
-            this.snackbarService.show(data.message).pipe(map(() => data))
+          switchMap((response: UserResponse) =>
+            this.snackbarService.show(response.message).pipe(map(() => response))
           ),
           map((response: UserResponse) =>
             AuthActions.registerSuccess({ user: response.user })

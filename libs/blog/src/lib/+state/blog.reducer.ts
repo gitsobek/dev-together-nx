@@ -30,6 +30,7 @@ export const blogInitialState: Blog = {
     filters: {
       tag: 'All',
       limit: 10,
+      author: ''
     },
   },
   articles: {
@@ -70,6 +71,17 @@ const reducer = createReducer(
     const filters = {
       ...state.query.filters,
       tag: action.tag,
+    };
+    const query = {
+      ...state.query,
+      filters,
+    };
+    return { ...state, query };
+  }),
+  on(BlogActions.setArticlesAuthor, (state, action) => {
+    const filters = {
+      ...state.query.filters,
+      author: action.username
     };
     const query = {
       ...state.query,

@@ -43,6 +43,10 @@ export class BlogFacade {
     this.store.dispatch(BlogActions.setArticlesType({ listType: type }));
   }
 
+  setAuthor(username: string) {
+    this.store.dispatch(BlogActions.setArticlesAuthor({ username }));
+  }
+
   navigateToArticle(slug: string) {
     this.store.dispatch(go({ to: { path: ['/article', slug] } }));
   }

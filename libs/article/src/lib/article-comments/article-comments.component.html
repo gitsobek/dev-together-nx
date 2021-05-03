@@ -4,8 +4,8 @@
       <div *ngFor="let comment of comments" class="comment">
         <header>
           <div>
-            <img [src]="comment.author?.image" />
-            <p>{{ comment.author?.username }}</p>
+            <img [routerLink]="['/profile', comment.author?.username]" [src]="comment.author?.image" />
+            <p [routerLink]="['/profile', comment.author?.username]">{{ comment.author?.username }}</p>
             <span
               *ngIf="currentUser?.id === comment.author?.id"
               class="delete-comment"

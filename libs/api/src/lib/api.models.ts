@@ -1,5 +1,6 @@
 import { User } from '@dev-together/auth';
-import { Article, Comment, Profile } from '@dev-together/article';
+import { Article, Comment } from '@dev-together/article';
+import { Profile } from '@dev-together/profile';
 import { HttpErrorResponse } from '@angular/common/http';
 
 interface Response {

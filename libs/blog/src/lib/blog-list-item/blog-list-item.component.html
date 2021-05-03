@@ -1,6 +1,6 @@
 <article>
   <div class="header">
-    <div>
+    <div [routerLink]="['/profile', article.author?.username]">
       <img [src]="article.author?.image" />
       <p>{{ article.author?.username }}</p>
     </div>

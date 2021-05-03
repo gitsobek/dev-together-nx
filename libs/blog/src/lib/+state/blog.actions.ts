@@ -42,6 +42,11 @@ export const setArticlesType = createAction(
   props<{ listType: ListType }>()
 );
 
+export const setArticlesAuthor = createAction(
+  '[Blog] SET_ARTICLES_AUTHOR',
+  props<{ username: string }>()
+);
+
 /* -- Tags -- */
 export const loadTags = createAction('[Blog] LOAD_TAGS');
 

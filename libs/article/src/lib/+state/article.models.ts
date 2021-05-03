@@ -1,4 +1,4 @@
-import { User } from "@dev-together/auth";
+import { Profile } from "@dev-together/profile";
 
 export interface Article {
   slug: string;
@@ -12,8 +12,6 @@ export interface Article {
   favorited: boolean;
   author: Profile;
 }
-
-export type Profile = Omit<User, 'token' | 'email'> & { following: boolean };
 
 export interface Comment {
   id: number;

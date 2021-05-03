@@ -42,7 +42,6 @@ import { UiElementsModule } from '@dev-together/ui-elements';
     ArticleFacade,
     { provide: Article, useClass: MockArticleService },
     ArticleResolver,
-    ArticleEffects,
     BLOG_ACTION_PROVIDER,
   ],
   declarations: [ArticleComponent, ArticleCommentsComponent],

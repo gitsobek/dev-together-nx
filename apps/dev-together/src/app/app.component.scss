@@ -19,24 +19,34 @@ button:not(:last-child) {
   margin-right: 5px;
 }
 
-.user-txt {
-  cursor: pointer;
-}
+.user {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 
-.avatar {
-  width: 50px;
-  height: 50px;
-  background-size: cover;
-  background-position: top center;
-  border-radius: 50%;
-  box-shadow: 1px 4px 5px #767474, 3px -1px 10px #a09e9e;
-  margin-left: 10px;
-  cursor: pointer;
+  &-txt {
+    cursor: pointer;
 
-  > img {
-    width: 100%;
-    height: 100%;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &-avatar {
+    width: 50px;
+    height: 50px;
+    background-size: cover;
+    background-position: top center;
     border-radius: 50%;
+    box-shadow: 1px 4px 5px #767474, 3px -1px 10px #a09e9e;
+    margin-left: 10px;
+    cursor: pointer;
+  
+    > img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
   }
 }
 
@@ -66,13 +76,13 @@ button:not(:last-child) {
     margin-right: 10px;
   }
 
-  &[routerLink="/login"] {
+  &[routerLink='/login'] {
     &:hover {
-      color: #f04f65
+      color: #f04f65;
     }
   }
 
-  &[routerLink="/register"] {
+  &[routerLink='/register'] {
     &:hover {
       color: #2acdc1;
     }

@@ -12,5 +12,6 @@ module.exports = {
     '<rootDir>/libs/shared',
     '<rootDir>/libs/blog',
     '<rootDir>/libs/article',
+    '<rootDir>/libs/profile',
   ],
 };

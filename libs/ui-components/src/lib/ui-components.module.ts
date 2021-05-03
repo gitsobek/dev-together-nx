@@ -7,6 +7,10 @@ import { RepeatDirective } from '@dev-together/shared';
 import { ModalComponent } from './modal/modal.component';
 import { UiElementsModule } from '@dev-together/ui-elements';
 import { ModalCloseDirective } from './modal/modal-close.directive';
+import { EditableComponent } from './editable/editable.component';
+import { ViewModeDirective } from './editable/view-mode.directive';
+import { EditModeDirective } from './editable/edit-mode.directive';
+import { EditOnEnterDirective } from './editable/edit-on-enter.directive';
 
 @NgModule({
   imports: [CommonModule, UiElementsModule],
@@ -16,8 +20,21 @@ import { ModalCloseDirective } from './modal/modal-close.directive';
     PaginatorComponent,
     RepeatDirective,
     ModalComponent,
-    ModalCloseDirective
+    ModalCloseDirective,
+    EditableComponent,
+    EditOnEnterDirective,
+    ViewModeDirective,
+    EditModeDirective
   ],
-  exports: [SnackbarComponent, TabSwitchComponent, PaginatorComponent, ModalComponent],
+  exports: [
+    SnackbarComponent,
+    TabSwitchComponent,
+    PaginatorComponent,
+    ModalComponent,
+    EditableComponent,
+    EditOnEnterDirective,
+    ViewModeDirective,
+    EditModeDirective
+  ],
 })
 export class UiComponentsModule {}

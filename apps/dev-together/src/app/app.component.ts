@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthFacade, StorageService, User } from '@dev-together/auth';
 import { MatchMediaService } from '@dev-together/shared';
 import { SnackbarService } from '@dev-together/ui-components';
+import { ProfileFacade } from 'libs/profile/src/lib/+state/profile.facade';
 import { Observable, of } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 
