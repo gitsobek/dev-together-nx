@@ -95,6 +95,7 @@ describe('AuthEffects', () => {
         username: 'test',
         bio: '',
         image: '',
+        joinedAt: ''
       };
 
       const getUserAction = AuthActions.getUser();
@@ -136,6 +137,7 @@ describe('AuthEffects', () => {
         username: 'test',
         bio: '',
         image: '',
+        joinedAt: ''
       };
 
       const loginAction = AuthActions.login();
@@ -179,6 +181,7 @@ describe('AuthEffects', () => {
         username: 'test',
         bio: '',
         image: '',
+        joinedAt: ''
       };
 
       const registerAction = AuthActions.register();
@@ -224,6 +227,7 @@ describe('AuthEffects', () => {
         username: 'test',
         bio: '',
         image: '',
+        joinedAt: ''
       };
 
       const loginSuccessAction = AuthActions.loginSuccess({ user: result });
@@ -247,6 +251,7 @@ describe('AuthEffects', () => {
         username: 'test',
         bio: '',
         image: '',
+        joinedAt: ''
       };
 
       const registerSuccessAction = AuthActions.registerSuccess({

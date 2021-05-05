@@ -3,15 +3,9 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { AuthFacade, User } from '@dev-together/auth';
 import { ArticleQuery, BlogFacade } from '@dev-together/blog';
 import { FormsFacade } from '@dev-together/forms';
-import { Observable, Subject, combineLatest } from 'rxjs';
-import {
-  map,
-  takeUntil,
-  filter,
-  tap,
-  withLatestFrom,
-  pairwise,
-} from 'rxjs/operators';
+import { tapOnce } from '@dev-together/shared';
+import { Observable, Subject, combineLatest, EMPTY, of } from 'rxjs';
+import { map, takeUntil, filter, tap, withLatestFrom, switchMap } from 'rxjs/operators';
 import { ProfileFacade } from '../+state/profile.facade';
 import { Profile } from '../+state/profile.models';
 
@@ -55,21 +49,27 @@ export class ProfileComponent implements OnInit {
           isCurrentUser: p.username === u.username,
           profile: p,
         })),
+        switchMap(({ isCurrentUser, profile }) => {
+          this.isCurrentUser = isCurrentUser;
+
+          if (isCurrentUser) {
+            this.formGroup = new FormGroup({
+              image: new FormControl(
+                profile?.image === '/assets/no-user.png' ? '' : profile?.image
+              ),
+              bio: new FormControl(profile?.bio),
+            });
+
+            return this.listenForChanges();
+          }
+
+          return of([null, null])
+        }),
         takeUntil(this.unsubscribe$)
       )
-      .subscribe(({ isCurrentUser, profile }) => {
-        this.isCurrentUser = isCurrentUser;
-
-        if (isCurrentUser) {
-          this.formGroup = new FormGroup({
-            image: new FormControl(
-              profile?.image === '/assets/no-user.png' ? '' : profile?.image
-            ),
-            bio: new FormControl(profile?.bio),
-          });
-
-          this.listenForChanges();
-        }
+      .subscribe(([data, form]) => {
+        form && this.formsFacade.setData(form);
+        data && this.profileFacade.updateProfile();
       });
   }
 
@@ -96,8 +96,8 @@ export class ProfileComponent implements OnInit {
     this.update$.next();
   }
 
-  private listenForChanges(): void {
-    this.update$
+  private listenForChanges(): Observable<any[]> {
+    return this.update$
       .pipe(
         withLatestFrom(this.formsFacade.data$, this.formGroup.valueChanges),
         map(([_, data, form]) => [data, form]),
@@ -110,11 +110,6 @@ export class ProfileComponent implements OnInit {
             dArr.every((val, idx) => val === fArr[idx])
           );
         }),
-        takeUntil(this.unsubscribe$)
-      )
-      .subscribe(([_, form]) => {
-        this.formsFacade.setData(form);
-        this.profileFacade.updateProfile();
-      });
+      );
   }
 }

@@ -50,7 +50,7 @@ export class ProfileEffects {
           map((response) =>
             ProfileActions.editProfileSuccess({ profile: response.profile })
           ),
-          catchError((error) => of(ProfileActions.editProfileFail(error)))
+          catchError((error) => of(ProfileActions.editProfileFail({ error })))
         )
       )
     )

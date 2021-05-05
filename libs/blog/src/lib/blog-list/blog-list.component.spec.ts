@@ -38,6 +38,7 @@ describe('BlogListComponent', () => {
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
+      imports: [],
       declarations: [BlogListComponent, BlogListItemComponent],
       providers: [
         {

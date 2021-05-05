@@ -2,8 +2,8 @@
   <section>
     <header>
       <div>
-        <img [src]="article.author?.image" />
-        <p>{{ article.author?.username }}</p>
+        <img [routerLink]="['/profile', article.author?.username]" [src]="article.author?.image" />
+        <p [routerLink]="['/profile', article.author?.username]">{{ article.author?.username }}</p>
       </div>
 
       <div>

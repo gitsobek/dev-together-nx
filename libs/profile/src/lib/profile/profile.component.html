@@ -55,7 +55,7 @@
       </ng-container>
 
       <ng-template #defaultBtns>
-        <div *ngIf="profile$ | async as profile" class="action-btn">
+        <div class="action-btn">
           <i
             class="fas {{
               profile.following ? 'fa-user-times' : 'fa-user-plus'

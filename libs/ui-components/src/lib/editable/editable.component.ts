@@ -23,7 +23,7 @@ import { ViewModeDirective } from './view-mode.directive';
 export class EditableComponent implements OnInit {
   @ContentChild(ViewModeDirective) viewModeTpl: ViewModeDirective;
   @ContentChild(EditModeDirective) editModeTpl: EditModeDirective;
-  @Input() disabled: boolean;
+  @Input() disabled: boolean = false;
   @Output() update = new EventEmitter();
 
   editMode = new Subject();
