@@ -1,25 +1,63 @@
 import { Injectable } from '@angular/core';
 import { asyncScheduler, Observable, of } from 'rxjs';
 import {
+  ApiResponse,
   ApiService,
   ArticleResponse,
   CommentResponse,
   CommentsResponse,
 } from '@dev-together/api';
-import { Article } from './article.abstract';
 import { scheduled } from 'rxjs';
 import { delay, take } from 'rxjs/operators';
 import { DB } from '@dev-together/shared';
-import { Comment } from '../+state/article.models';
+import { Article, Comment } from '../+state/article.models';
 import { StorageService, User } from '@dev-together/auth';
+import { ArticleAbstract } from './article.abstract';
 
 @Injectable()
-export class MockArticleService extends Article {
+export class MockArticleService extends ArticleAbstract {
   users: User[];
 
   constructor(private storageService: StorageService) {
     super();
     this.users = this.storageService.getItem('IM_USERS') || [];
+  }
+
+  publishArticle(article: Article): Observable<ArticleResponse> {
+    const { articles, comments } = DB;
+
+    let duplicatedTitlesNum = articles.filter((a) => a.title === article.title)
+      .length;
+
+    const token = this.storageService.getItem('token');
+    const { token: _, email, ...restOfUser } = this.users.find(
+      (u) => u.token === token
+    );
+
+    const newArticle = {
+      ...article,
+      slug:
+        slugify(article.title) +
+        (duplicatedTitlesNum > 0 ? '-' + duplicatedTitlesNum++ : '-1'),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      favorites: 0,
+      favorited: false,
+      author: {
+        ...restOfUser,
+        following: false,
+      },
+    };
+
+    DB.articles = [newArticle, ...DB.articles];
+    DB.comments = [{ _slug: newArticle.slug, comments: [] }, ...DB.comments];
+
+    const response = {
+      code: 200,
+      article: newArticle,
+    };
+
+    return scheduled([response], asyncScheduler).pipe(delay(500), take(1));
   }
 
   getArticle(slug: string): Observable<ArticleResponse> {
@@ -44,8 +82,18 @@ export class MockArticleService extends Article {
     return scheduled([response], asyncScheduler).pipe(delay(500), take(1));
   }
 
-  deleteArticle(slug: string): Observable<void> {
-    return of(null);
+  deleteArticle(slug: string): Observable<ApiResponse> {
+    const { articles } = DB;
+
+    const updatedArticles = articles.filter((a) => a.slug !== slug);
+    DB.articles = updatedArticles;
+    
+    const response = {
+      code: 200,
+      message: 'Article has been deleted successfully.'
+    }
+
+    return scheduled([response], asyncScheduler).pipe(delay(500), take(1));
   }
 
   deleteComment(slug: string, commentId: number): Observable<void> {
@@ -55,7 +103,9 @@ export class MockArticleService extends Article {
     const newComments = [
       ...comments.slice(0, commentEntityIdx),
       Object.assign({}, comments[commentEntityIdx], {
-        comments: comments[commentEntityIdx].comments.filter(c => c.id !== commentId),
+        comments: comments[commentEntityIdx].comments.filter(
+          (c) => c.id !== commentId
+        ),
       }),
       ...comments.slice(commentEntityIdx + 1),
     ];
@@ -76,13 +126,13 @@ export class MockArticleService extends Article {
     const idx = this.users.findIndex((user) => user.token === token);
     const user = this.users[idx];
 
-    const profile = users.find(u => u.id === user.id);
+    const profile = users.find((u) => u.id === user.id);
 
     const comment: Comment = {
       id,
       body: payload,
       createdAt: new Date().toISOString(),
-      author: profile
+      author: profile,
     };
 
     let commentEntityIdx = comments.findIndex((c) => c._slug === slug);
@@ -130,4 +180,24 @@ export class MockArticleService extends Article {
 
     return scheduled([response], asyncScheduler).pipe(delay(500), take(1));
   }
+}
+
+function slugify(text: string): string {
+  const from = 'ãàáäâẽèéëêìíïîõòóöôùúüûñç·/_,:;';
+  const to = 'aaaaaeeeeeiiiiooooouuuunc------';
+
+  const newText = text
+    .split('')
+    .map((letter, i) =>
+      letter.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i))
+    );
+
+  return newText
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/&/g, '-y-')
+    .replace(/[^\w\-]+/g, '')
+    .replace(/\-\-+/g, '-');
 }

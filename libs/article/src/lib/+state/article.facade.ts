@@ -13,11 +13,20 @@ export class ArticleFacade {
   hasArticleError$ = this.store.select(articleQuery.hasArticleError);
   articleAuthor$ = this.store.select(articleQuery.getAuthor);
   isCommentsLoading$ = this.store.select(articleQuery.isCommentsLoading);
+  isPublishing$ = this.store.select(articleQuery.isPublishing);
 
   constructor(private store: Store<ArticleState>) {}
 
   initializeArticle() {
     this.store.dispatch(ArticleActions.initializeArticle());
+  }
+
+  publishArticle() {
+    this.store.dispatch(ArticleActions.publishArticle());
+  }
+
+  setPublishStatus() {
+    this.store.dispatch(ArticleActions.setPublishStatus());
   }
 
   loadArticle(slug: string) {

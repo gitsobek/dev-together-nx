@@ -50,7 +50,7 @@
   <div class="footer">
     <div [ngClass]="isCurrentUser ? 'settings' : 'action-buttons'">
       <ng-container *ngIf="isCurrentUser; else defaultBtns">
-        <span class="user-action">Add article</span>
+        <span [routerLink]="['/article', 'publish']" class="user-action">Add article</span>
         <span (click)="logout()" class="user-action">Logout</span>
       </ng-container>
 

@@ -1,0 +1,33 @@
+<section>
+  <div class="container">
+    <dev-together-form
+      [data$]="data$"
+      [form$]="form$"
+      (updateForm)="onFormUpdate($event)"
+    ></dev-together-form>
+
+    <dev-together-errors></dev-together-errors>
+
+    <div class="buttons">
+      <button
+        dev-together-button-retro
+        text="Publish"
+        insideColor="#f04f65"
+        hoverColor="#2acdc1"
+        [loading]="isPublishing$ | async"
+        (click)="submit()"
+        class="submit-btn"
+      ></button>
+
+      <button
+        *ngIf="article?.slug"
+        dev-together-button-retro
+        text="Delete"
+        insideColor="#f04f65"
+        hoverColor="#2acdc1"
+        (click)="delete(article.slug)"
+        class="submit-btn"
+      ></button>
+    </div>
+  </div>
+</section>

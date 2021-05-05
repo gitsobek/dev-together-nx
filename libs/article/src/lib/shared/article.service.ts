@@ -1,17 +1,28 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
+  ApiResponse,
   ApiService,
   ArticleResponse,
   CommentResponse,
   CommentsResponse,
 } from '@dev-together/api';
-import { Article } from './article.abstract';
+import { ArticleAbstract } from './article.abstract';
+import { Article } from '../+state/article.models';
 
 @Injectable()
-export class ArticleService extends Article {
+export class ArticleService extends ArticleAbstract {
   constructor(private apiService: ApiService) {
     super();
+  }
+
+  publishArticle(article: Article): Observable<ArticleResponse> {
+    if (article.slug) {
+      return this.apiService.put<ArticleResponse, { article: Article }>('/articles/' + article.slug, {
+        article: article,
+      });
+    }
+    return this.apiService.post<ArticleResponse, { article: Article }>('/articles/', { article: article });
   }
 
   getArticle(slug: string): Observable<ArticleResponse> {
@@ -22,8 +33,8 @@ export class ArticleService extends Article {
     return this.apiService.get<CommentsResponse>(`/articles/${slug}/comments`);
   }
 
-  deleteArticle(slug: string): Observable<void> {
-    return this.apiService.delete<void>('/articles/' + slug);
+  deleteArticle(slug: string): Observable<ApiResponse> {
+    return this.apiService.delete<ApiResponse>('/articles/' + slug);
   }
 
   deleteComment(slug: string, commentId: number): Observable<void> {

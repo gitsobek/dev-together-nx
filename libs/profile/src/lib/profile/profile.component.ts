@@ -3,9 +3,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { AuthFacade, User } from '@dev-together/auth';
 import { ArticleQuery, BlogFacade } from '@dev-together/blog';
 import { FormsFacade } from '@dev-together/forms';
-import { tapOnce } from '@dev-together/shared';
-import { Observable, Subject, combineLatest, EMPTY, of } from 'rxjs';
-import { map, takeUntil, filter, tap, withLatestFrom, switchMap } from 'rxjs/operators';
+import { Observable, Subject, combineLatest, of } from 'rxjs';
+import { map, takeUntil, filter, withLatestFrom, switchMap } from 'rxjs/operators';
 import { ProfileFacade } from '../+state/profile.facade';
 import { Profile } from '../+state/profile.models';
 

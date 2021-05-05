@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { ArticleService } from '../shared/article.service';
 import { BLOG_ACTION_TOKEN, IBlogActions } from '@dev-together/shared';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { from, of } from 'rxjs';
+import { concat, from, of } from 'rxjs';
 import {
   catchError,
   concatMap,
@@ -14,13 +14,37 @@ import {
 } from 'rxjs/operators';
 import * as ArticleActions from './article.actions';
 import { go } from '@dev-together/router';
-import { Article } from '../shared/article.abstract';
+import { ArticleAbstract } from '../shared/article.abstract';
 import { FormsFacade } from '@dev-together/forms';
 import * as fromForms from '@dev-together/forms';
 import { ArticleFacade } from './article.facade';
+import { SnackbarService } from '@dev-together/ui-components';
+import { ApiResponse } from '@dev-together/api';
 
 @Injectable()
 export class ArticleEffects {
+  publishArticle$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ArticleActions.publishArticle),
+      tap(() => this.formsFacade.submitForm()),
+      withLatestFrom(this.formsFacade.isValid$, this.formsFacade.data$),
+      filter(([_, valid]) => !!valid),
+      tap(() => this.articleFacade.setPublishStatus()),
+      concatMap(([a, v, data]) =>
+        this.articleService.publishArticle(data).pipe(
+          map((result) =>
+            go({
+              to: { path: ['article', result.article.slug] },
+            })
+          ),
+          catchError((error) =>
+            of(ArticleActions.publishArticleFail({ error }))
+          )
+        )
+      )
+    )
+  );
+
   loadArticle$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ArticleActions.loadArticle),
@@ -40,8 +64,16 @@ export class ArticleEffects {
       ofType(ArticleActions.deleteArticle),
       concatMap((action) =>
         this.articleService.deleteArticle(action.slug).pipe(
-          map((_) => go({ to: { path: ['/'] } })),
-          catchError((error) => of(ArticleActions.deleteArticleFail(error)))
+          switchMap((response: ApiResponse) =>
+            this.snackbarService.show(response.message)
+          ),
+          switchMap((_) =>
+            from([
+              ArticleActions.initializeArticle(),
+              go({ to: { path: ['/'] } }),
+            ])
+          ),
+          catchError((error) => of(ArticleActions.deleteArticleFail({ error })))
         )
       )
     )
@@ -55,7 +87,7 @@ export class ArticleEffects {
           map((data) =>
             ArticleActions.loadCommentsSuccess({ comments: data.comments })
           ),
-          catchError((error) => of(ArticleActions.loadCommentsFail(error)))
+          catchError((error) => of(ArticleActions.loadCommentsFail({ error })))
         )
       )
     )
@@ -71,9 +103,12 @@ export class ArticleEffects {
       concatMap(([action, _, data]) =>
         this.articleService.addComment(action.slug, data.comment).pipe(
           switchMap((response) =>
-            from([ArticleActions.addCommentSuccess({ comment: response.comment }), fromForms.resetForm()])
+            from([
+              ArticleActions.addCommentSuccess({ comment: response.comment }),
+              fromForms.resetForm(),
+            ])
           ),
-          catchError((error) => of(ArticleActions.addCommentFail(error)))
+          catchError((error) => of(ArticleActions.addCommentFail({ error })))
         )
       )
     )
@@ -87,7 +122,7 @@ export class ArticleEffects {
           map((_) =>
             ArticleActions.deleteCommentSuccess({ commentId: action.commentId })
           ),
-          catchError((error) => of(ArticleActions.deleteCommentFail(error)))
+          catchError((error) => of(ArticleActions.deleteCommentFail({ error })))
         )
       )
     )
@@ -105,7 +140,7 @@ export class ArticleEffects {
             })
           ),
           catchError((error) =>
-            of(ArticleActions.setFavoriteArticleFail(error))
+            of(ArticleActions.setFavoriteArticleFail({ error }))
           )
         )
       )
@@ -121,7 +156,7 @@ export class ArticleEffects {
           map((response) =>
             ArticleActions.setFollowUserSuccess({ profile: response.profile })
           ),
-          catchError((error) => of(ArticleActions.setFollowUserFail(error)))
+          catchError((error) => of(ArticleActions.setFollowUserFail({ error })))
         )
       )
     )
@@ -129,9 +164,10 @@ export class ArticleEffects {
 
   constructor(
     private actions$: Actions,
-    private articleService: Article,
+    private articleService: ArticleAbstract,
     private articleFacade: ArticleFacade,
     private formsFacade: FormsFacade,
+    private snackbarService: SnackbarService,
     @Inject(BLOG_ACTION_TOKEN) private blogActionsService: IBlogActions
   ) {}
 }

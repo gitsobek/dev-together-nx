@@ -3,7 +3,7 @@ import { Article, Comment } from '@dev-together/article';
 import { Profile } from '@dev-together/profile';
 import { HttpErrorResponse } from '@angular/common/http';
 
-interface Response {
+export interface ApiResponse {
   code: number;
   message?: string;
   error?: object;
@@ -11,22 +11,22 @@ interface Response {
 
 export type ErrorResponse = Partial<HttpErrorResponse>;
 
-export interface UserResponse extends Response {
+export interface UserResponse extends ApiResponse {
   user?: User;
 }
 
-export interface ProfileResponse extends Response {
+export interface ProfileResponse extends ApiResponse {
   profile: Profile;
 }
 
-export interface ArticleResponse extends Response {
+export interface ArticleResponse extends ApiResponse {
   article: Article;
 }
 
-export interface CommentResponse extends Response {
+export interface CommentResponse extends ApiResponse {
   comment: Comment;
 }
 
-export interface CommentsResponse extends Response {
+export interface CommentsResponse extends ApiResponse {
   comments: Comment[];
 }

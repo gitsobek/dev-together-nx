@@ -39,9 +39,15 @@ export class MockProfileService extends ProfileAbstract {
 
     const userIdx = users.findIndex((u) => u.username === user.username);
 
+    const { loading, loaded, hasError, ...restOfUser } = user as Profile & {
+      loading: boolean;
+      loaded: boolean;
+      hasError: boolean;
+    };
+
     const newUser = {
       ...users[userIdx],
-      ...user,
+      ...restOfUser,
       image: user.image ? user.image : '/assets/no-user.png',
     };
     const newUsers = [

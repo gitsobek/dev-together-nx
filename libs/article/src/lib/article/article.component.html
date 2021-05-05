@@ -2,8 +2,13 @@
   <section>
     <header>
       <div>
-        <img [routerLink]="['/profile', article.author?.username]" [src]="article.author?.image" />
-        <p [routerLink]="['/profile', article.author?.username]">{{ article.author?.username }}</p>
+        <img
+          [routerLink]="['/profile', article.author?.username]"
+          [src]="article.author?.image"
+        />
+        <p [routerLink]="['/profile', article.author?.username]">
+          {{ article.author?.username }}
+        </p>
       </div>
 
       <div>
@@ -24,7 +29,11 @@
 
       <div *ngIf="isLoggedIn$ | async" class="action-buttons">
         <ng-container *ngIf="canEdit; else defaultBtns">
-          <span>Edit your article</span>
+          <span
+            [routerLink]="['/article', 'publish', article.slug]"
+            class="user-action"
+            >Edit your article</span
+          >
         </ng-container>
 
         <ng-template #defaultBtns>

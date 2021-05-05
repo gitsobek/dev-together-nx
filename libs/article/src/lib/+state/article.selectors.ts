@@ -28,6 +28,10 @@ export const isCommentsLoading = createSelector(
   articleFeatureSelector,
   (state: ArticleState) => state.commentsLoading
 );
+export const isPublishing = createSelector(
+  articleFeatureSelector,
+  (state: ArticleState) => state.publishing
+);
 
 export const articleQuery = {
   getArticle,
@@ -35,5 +39,6 @@ export const articleQuery = {
   hasArticleError,
   isArticleLoaded,
   getAuthor,
-  isCommentsLoading
+  isCommentsLoading,
+  isPublishing
 };

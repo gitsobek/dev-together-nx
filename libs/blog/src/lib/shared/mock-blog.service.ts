@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Article } from '@dev-together/article';
+import { StorageService, User } from '@dev-together/auth';
 import { DB } from '@dev-together/shared';
 import { asyncScheduler, Observable, scheduled } from 'rxjs';
 import { delay, take } from 'rxjs/operators';
@@ -8,8 +9,11 @@ import { Blog } from './blog.abstract';
 
 @Injectable()
 export class MockBlogService extends Blog {
-  constructor() {
+  users: User[];
+
+  constructor(private storageService: StorageService) {
     super();
+    this.users = this.storageService.getItem('IM_USERS') || [];
   }
 
   query(
@@ -18,6 +22,10 @@ export class MockBlogService extends Blog {
     const { type, pageIndex = 1, filters } = config;
 
     const { articles } = DB;
+    const token = this.storageService.getItem('token');
+    const user = this.users.find((u) => u.token === token);
+
+    const personalArticles = articles.filter((a) => a.author.id === user.id);
 
     let response: { articles: Article[]; count: number } =
       type === 'ALL'
@@ -28,11 +36,16 @@ export class MockBlogService extends Blog {
                 (pageIndex - 1) * (filters.limit || 10),
                 pageIndex * (filters.limit || 10)
               ),
-            count: 100,
+            count: 73,
           }
         : {
-            articles: [],
-            count: 0,
+            articles: personalArticles
+              .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+              .slice(
+                (pageIndex - 1) * (filters.limit || 10),
+                pageIndex * (filters.limit || 10)
+              ),
+            count: personalArticles.length,
           };
 
     if (filters.tag !== 'All') {

@@ -103,6 +103,26 @@ article {
     flex-direction: row;
     align-items: center;
 
+    .user-action {
+      font-family: sans-serif;
+      font-weight: 600;
+      color: #04049d;
+      font-size: 12px;
+      line-height: 110%;
+      letter-spacing: 2px;
+      text-align: center;
+      text-transform: uppercase;
+      cursor: pointer;
+
+      &:not(:last-child) {
+        margin-bottom: 6px;
+      }
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
     .action-btn {
       display: flex;
       flex-direction: column;

@@ -13,6 +13,7 @@ export interface ArticleState {
   commentsLoaded: boolean;
   commentsLoading: boolean;
   commentsHasError: boolean;
+  publishing: boolean;
 }
 
 export interface ArticleRootState {
@@ -46,11 +47,13 @@ export const articleInitialState: ArticleState = {
   commentsLoaded: false,
   commentsLoading: false,
   commentsHasError: false,
+  publishing: false
 };
 
 const reducer = createReducer(
   articleInitialState,
   on(ArticleActions.initializeArticle, () => articleInitialState),
+  on(ArticleActions.setPublishStatus, (state, _) => ({ ...state, publishing: true })),
   on(ArticleActions.loadArticle, (state) => ({ ...state, loading: true })),
   on(ArticleActions.loadArticleSuccess, (state, action) => ({
     ...state,
@@ -58,13 +61,18 @@ const reducer = createReducer(
     loaded: true,
     loading: false,
   })),
-  on(ArticleActions.loadArticleFail, (state) => ({
-    ...state,
-    data: articleInitialState.data,
-    loaded: false,
-    loading: false,
-    hasError: true,
-  })),
+  on(
+    ArticleActions.loadArticleFail,
+    ArticleActions.publishArticleFail,
+    (state) => ({
+      ...state,
+      data: articleInitialState.data,
+      loaded: false,
+      loading: false,
+      hasError: true,
+      publishing: false
+    })
+  ),
   on(ArticleActions.deleteArticleSuccess, () => articleInitialState),
   on(ArticleActions.setFavoriteArticleSuccess, (state, action) => ({
     ...state,

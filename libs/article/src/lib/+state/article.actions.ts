@@ -20,6 +20,12 @@ export const loadArticleFail = createAction(
 );
 
 /* -- Article actions -- */
+export const publishArticle = createAction('[Article] PUBLISH_ARTICLE');
+export const publishArticleFail = createAction(
+  '[Article] PUBLISH_ARTICLE_FAIL',
+  props<{ error: ErrorResponse }>()
+);
+export const setPublishStatus = createAction('[Article] SET_PUBLISH_STATUS');
 export const deleteArticle = createAction(
   '[Article] DELETE_ARTICLE',
   props<{ slug: string }>()

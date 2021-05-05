@@ -164,7 +164,7 @@ describe('ProfileComponent', () => {
     input.dispatchEvent(new Event('input'));
     fixture.detectChanges();
 
-    /* Non-related element for switchhing back to view mode */
+    /* Non-related element used to switch back to view mode */
     const headerTxt: HTMLElement = profile.query(By.css('header > .info'))
       .nativeElement;
     headerTxt.click();
