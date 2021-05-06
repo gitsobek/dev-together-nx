@@ -113,6 +113,7 @@ export class MockAuthService extends Auth {
 
     const res = {
       code: 200,
+      user,
       message: 'You have successfully registered in.',
     };
 

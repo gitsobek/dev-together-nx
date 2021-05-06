@@ -53,7 +53,12 @@ export class ArticleEffects {
           map((response) =>
             ArticleActions.loadArticleSuccess({ article: response.article })
           ),
-          catchError((error) => of(ArticleActions.loadArticleFail({ error })))
+          catchError((error) =>
+            from([
+              ArticleActions.loadArticleFail({ error }),
+              go({ to: { path: ['/'] } }),
+            ])
+          )
         )
       )
     )

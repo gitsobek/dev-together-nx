@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { asyncScheduler, Observable, of } from 'rxjs';
+import { asyncScheduler, Observable, of, throwError } from 'rxjs';
 import {
   ApiResponse,
   ApiService,
@@ -8,7 +8,7 @@ import {
   CommentsResponse,
 } from '@dev-together/api';
 import { scheduled } from 'rxjs';
-import { delay, take } from 'rxjs/operators';
+import { delay, switchMap, take } from 'rxjs/operators';
 import { DB } from '@dev-together/shared';
 import { Article, Comment } from '../+state/article.models';
 import { StorageService, User } from '@dev-together/auth';
@@ -63,12 +63,26 @@ export class MockArticleService extends ArticleAbstract {
   getArticle(slug: string): Observable<ArticleResponse> {
     const { articles } = DB;
 
-    const response = {
-      code: 200,
-      article: articles.find((a) => a.slug === slug) || null,
-    };
+    const article = articles.find((a) => a.slug === slug) || null;
 
-    return scheduled([response], asyncScheduler).pipe(delay(500), take(1));
+    return scheduled([article], asyncScheduler).pipe(
+      delay(500), 
+      take(1),
+      switchMap((article) => {
+        if (article) {
+          return of({
+            code: 200,
+            article
+          });
+        }
+
+        return throwError({
+          code: 404,
+          error: null,
+          message: 'No article found.'
+        });
+      })
+    );
   }
 
   getComments(slug: string): Observable<CommentsResponse> {

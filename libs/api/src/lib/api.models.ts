@@ -12,7 +12,7 @@ export interface ApiResponse {
 export type ErrorResponse = Partial<HttpErrorResponse>;
 
 export interface UserResponse extends ApiResponse {
-  user?: User;
+  user: User;
 }
 
 export interface ProfileResponse extends ApiResponse {
