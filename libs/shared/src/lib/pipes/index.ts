@@ -1,3 +1,3 @@
-import { MapperPipe } from './mapper.pipe';
+import { Mapper, MapperPipe } from './mapper.pipe';
 
-export { MapperPipe };
+export { MapperPipe, Mapper };

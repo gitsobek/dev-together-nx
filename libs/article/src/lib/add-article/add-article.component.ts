@@ -90,7 +90,12 @@ export class AddArticleComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((article) => {
         this.article = article;
-        this.formsFacade.setData(article);
+        this.formsFacade.setData({
+          title: article.title,
+          description: article.description,
+          body: article.body,
+          tags: article.tags
+        });
         this.cdr.detectChanges();
       });
   }

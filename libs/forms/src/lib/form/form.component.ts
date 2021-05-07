@@ -74,9 +74,7 @@ export class FormComponent implements OnInit, OnDestroy {
         this.formsFacade.setErrors(errors);
         this.formsFacade.validateForm(form.valid);
 
-        !!data
-          ? form.patchValue(data, { emitEvent: false })
-          : form.reset()
+        !!data ? form.patchValue(data, { emitEvent: false }) : form.reset();
       });
   }
 

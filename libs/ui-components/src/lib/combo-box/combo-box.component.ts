@@ -1,5 +1,6 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ContentChild,
   ElementRef,
@@ -8,10 +9,14 @@ import {
   Input,
   OnInit,
   Output,
+  Self,
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { limit, Pure } from '@dev-together/shared';
-import { Mapper } from 'libs/shared/src/lib/pipes/mapper.pipe';
+import {
+  ControlValueAccessor,
+  FormControl,
+  NgControl
+} from '@angular/forms';
+import { limit, Mapper, Pure } from '@dev-together/shared';
 import { Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 import { ComboBoxDirective } from './combo-box.directive';
@@ -20,14 +25,7 @@ import { ComboBoxDirective } from './combo-box.directive';
   selector: 'dev-together-combo-box',
   templateUrl: './combo-box.component.html',
   styleUrls: ['./combo-box.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: ComboBoxComponent,
-      multi: true,
-    },
-  ],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ComboBoxComponent implements OnInit, ControlValueAccessor {
   @Input()
@@ -55,6 +53,11 @@ export class ComboBoxComponent implements OnInit, ControlValueAccessor {
     this.isOpen &&
       this.filteredItems[this.calculatedIndex] &&
       this.selectItem(this.filteredItems[this.calculatedIndex]);
+  }
+
+  @HostListener('focusin')
+  onFocus() {
+    this.onTouched();
   }
 
   @HostListener('input')
@@ -101,11 +104,15 @@ export class ComboBoxComponent implements OnInit, ControlValueAccessor {
     );
   }
 
-  constructor() {
+  constructor(@Self() private controlDirective: NgControl) {
+    controlDirective.valueAccessor = this;
     this.unsubscribe$ = new Subject();
   }
 
   ngOnInit() {
+    this.controlDirective.control.setValidators([this.validate.bind(this)]);
+    this.controlDirective.control.updateValueAndValidity();
+
     this.unselect$
       .asObservable()
       .pipe(
@@ -135,16 +142,23 @@ export class ComboBoxComponent implements OnInit, ControlValueAccessor {
     this.disabled = isDisabled;
   }
 
+  validate({ value }: FormControl) {
+    const isNotValid = !value || (value && !value.length);
+    
+    return isNotValid && {
+      required: true
+    }
+  }
+
   private selectItem(value: string) {
     this.formValue = [...this.formValue, value];
     this.onChange(this.formValue);
-    this.update.emit(this.formValue);
     this.field.nativeElement.value = '';
     this.close();
   }
 
-  readonly isActive: Mapper<number, boolean> = 
-    (index) => this.calculatedIndex === index;
+  readonly isActive: Mapper<number, boolean> = (index) =>
+    this.calculatedIndex === index;
 
   onClick(item: string) {
     this.selectItem(item);
