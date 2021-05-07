@@ -9,7 +9,7 @@ import {
 } from '@dev-together/api';
 import { scheduled } from 'rxjs';
 import { delay, switchMap, take } from 'rxjs/operators';
-import { DB } from '@dev-together/shared';
+import { DB, slugify } from '@dev-together/shared';
 import { Article, Comment } from '../+state/article.models';
 import { StorageService, User } from '@dev-together/auth';
 import { ArticleAbstract } from './article.abstract';
@@ -24,7 +24,7 @@ export class MockArticleService extends ArticleAbstract {
   }
 
   publishArticle(article: Article): Observable<ArticleResponse> {
-    const { articles, comments } = DB;
+    const { articles } = DB;
 
     let duplicatedTitlesNum = articles.filter((a) => a.title === article.title)
       .length;
@@ -196,22 +196,3 @@ export class MockArticleService extends ArticleAbstract {
   }
 }
 
-function slugify(text: string): string {
-  const from = 'ãàáäâẽèéëêìíïîõòóöôùúüûñç·/_,:;';
-  const to = 'aaaaaeeeeeiiiiooooouuuunc------';
-
-  const newText = text
-    .split('')
-    .map((letter, i) =>
-      letter.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i))
-    );
-
-  return newText
-    .toString()
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, '-')
-    .replace(/&/g, '-y-')
-    .replace(/[^\w\-]+/g, '')
-    .replace(/\-\-+/g, '-');
-}

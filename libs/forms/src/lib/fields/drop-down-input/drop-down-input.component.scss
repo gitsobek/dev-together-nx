@@ -1,0 +1,39 @@
+@use '../fields';
+
+.item-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 15px;
+
+  .item {
+    position: relative;
+    padding: 5px 10px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 20px;
+    margin-right: 10px;
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1);
+
+    span {
+      font-size: 14px;
+    }
+
+    button {
+      position: absolute;
+      padding: 0 2px;
+      background: none;
+      border: 0;
+      border-radius: 4px;
+      color: rgb(240, 79, 101);
+      cursor: pointer;
+      top: -5px;
+      right: -3px;
+      outline: none;
+
+      &:focus-visible {
+        box-shadow: 0 0 2px white;
+      }
+    }
+  }
+}

@@ -16,11 +16,12 @@ export interface Field {
   placeholder?: string;
   validator?: ValidatorFn[];
   attrs?: any;
-  defaultValue?: string | number | boolean;
+  defaultValue?: string | number | boolean | []
+  itemsToSelect?: any[]
 }
 
 export interface Errors {
-  [key: string]: string[]
+  [key: string]: string[];
 }
 
-export type FieldType = 'INPUT' | 'TEXTAREA';
+export type FieldType = 'INPUT' | 'TEXTAREA' | 'DROP_DOWN_INPUT';

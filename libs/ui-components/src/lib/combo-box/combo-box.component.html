@@ -1,0 +1,14 @@
+<label>
+  <ng-content></ng-content>
+</label>
+<div *ngIf="isOpen" class="list" (mousedown)="noop($event)">
+  <div
+    *ngFor="let item of filteredItems; let idx = index"
+    class="item"
+    [class.is-active]="idx | mapper: isActive : index"
+    (click)="onClick(item)"
+    (mouseenter)="onMouseEnter(idx)"
+  >
+    {{ item }}
+  </div>
+</div>

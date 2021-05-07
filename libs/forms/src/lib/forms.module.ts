@@ -14,19 +14,31 @@ import {
 } from './+state/forms.reducer';
 import { CustomFieldDirective } from './form/custom-field.directive';
 import { ErrorsComponent } from './errors/errors.component';
+import { DropDownInputComponent } from './fields/drop-down-input/drop-down-input.component';
+import { UiComponentsModule } from '@dev-together/ui-components';
+import { AccessControlDirective } from '@dev-together/shared';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    UiComponentsModule,
     StoreModule.forFeature(formsFeatureKey, formsReducer, {
       initialState: formsInitialState,
     }),
-    EffectsModule.forFeature([])
+    EffectsModule.forFeature([]),
   ],
   providers: [FormsFacade],
-  declarations: [FormComponent, CustomFieldDirective, InputComponent, TextareaComponent, ErrorsComponent],
-  entryComponents: [InputComponent, TextareaComponent],
+  declarations: [
+    FormComponent,
+    CustomFieldDirective,
+    AccessControlDirective,
+    InputComponent,
+    TextareaComponent,
+    ErrorsComponent,
+    DropDownInputComponent,
+  ],
+  entryComponents: [InputComponent, TextareaComponent, DropDownInputComponent],
   exports: [FormComponent, ErrorsComponent],
 })
 export class FormsModule {}

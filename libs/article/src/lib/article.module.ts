@@ -21,11 +21,13 @@ import { UiElementsModule } from '@dev-together/ui-elements';
 import { AddArticleComponent } from './add-article/add-article.component';
 import { PublishResolver } from './publish.resolver';
 import { AuthGuardService } from '@dev-together/auth';
+import { BlogModule } from '@dev-together/blog';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    BlogModule,
     RouterModule.forChild([
       {
         path: 'publish',

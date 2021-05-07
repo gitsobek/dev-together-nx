@@ -1,9 +1,15 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { Validators } from '@angular/forms';
+import { BlogFacade } from '@dev-together/blog';
 import { Field, FormsFacade } from '@dev-together/forms';
 import { ModalService } from '@dev-together/ui-components';
 import { Observable, Subject } from 'rxjs';
-import { first, takeUntil, tap } from 'rxjs/operators';
+import { filter, first, map, takeUntil, tap } from 'rxjs/operators';
 import { ArticleFacade } from '../+state/article.facade';
 import { Article } from '../+state/article.models';
 
@@ -27,9 +33,10 @@ const editorStructure: Field[] = [
     validator: [Validators.required],
   },
   {
-    type: 'INPUT',
+    type: 'DROP_DOWN_INPUT',
     name: 'tags',
     placeholder: 'Place your tags...',
+    defaultValue: [],
     validator: [],
   },
 ];
@@ -50,6 +57,7 @@ export class AddArticleComponent implements OnInit {
 
   constructor(
     private formsFacade: FormsFacade,
+    private blogFacade: BlogFacade,
     private modalService: ModalService,
     private articleFacade: ArticleFacade,
     private cdr: ChangeDetectorRef
@@ -58,7 +66,21 @@ export class AddArticleComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.formsFacade.setForm(editorStructure);
+    this.blogFacade.tags$
+      .pipe(
+        filter(v => v && v.length > 1),
+        first(),
+        map((tags) => {
+          const _tags = tags.filter((t) => t !== 'All');
+          const [lastItem] = editorStructure.slice(-1);
+          return [
+            ...editorStructure.slice(0, -1),
+            { ...lastItem, itemsToSelect: _tags },
+          ];
+        }),
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe((structure: Field[]) => this.formsFacade.setForm(structure));
 
     this.data$ = this.formsFacade.data$;
     this.form$ = this.formsFacade.form$;

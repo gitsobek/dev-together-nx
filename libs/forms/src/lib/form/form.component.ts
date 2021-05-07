@@ -49,7 +49,8 @@ export class FormComponent implements OnInit, OnDestroy {
         }),
         tap((f: FormGroup) => (this.form = f)),
         tap((f: FormGroup) => this.listenFormChanges(f)),
-        (f$) => combineLatest([f$, this.data$])
+        (f$) => combineLatest([f$, this.data$]),
+        takeUntil(this.unsubscribe$)
       )
       .subscribe(([form, data]: [FormGroup, any]) => {
         const errors = (<any>Object).fromEntries(

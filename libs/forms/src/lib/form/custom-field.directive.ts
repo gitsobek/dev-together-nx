@@ -8,12 +8,14 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Field, FieldType } from '../+state/forms.models';
+import { DropDownInputComponent } from '../fields/drop-down-input/drop-down-input.component';
 import { InputComponent } from '../fields/input/input.component';
 import { TextareaComponent } from '../fields/textarea/textarea.component';
 
 const componentStore: Map<FieldType, Type<any>> = new Map<FieldType, Type<any>>()
   .set('INPUT', InputComponent)
-  .set('TEXTAREA', TextareaComponent);
+  .set('TEXTAREA', TextareaComponent)
+  .set('DROP_DOWN_INPUT', DropDownInputComponent)
 
 @Directive({
   selector: '[appCustomField]',

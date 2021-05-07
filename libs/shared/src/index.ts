@@ -3,5 +3,8 @@ export * from './lib/services/blog-actions.service';
 export * from './lib/directives';
 export * from './lib/services';
 export * from './lib/operators';
+export * from './lib/decorators';
+export * from './lib/pipes';
 export * from './lib/models';
 export * from './lib/fake-db';
+export * from './lib/utils';

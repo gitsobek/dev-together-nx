@@ -1,0 +1,17 @@
+<fieldset [formGroup]="group">
+  <dev-together-combo-box
+    [items]="field?.itemsToSelect || []"
+    [formControlName]="field?.name"
+    [unselect$]="unselect$"
+    (update)="items = $event"
+  >
+    <input appComboBox type="text" [placeholder]="field?.placeholder" />
+  </dev-together-combo-box>
+
+  <div class="item-list">
+    <div class="item" *ngFor="let item of items; trackBy: trackByFn">
+      <button type="button" (click)="unselect$.next(item)">&#x2715;</button>
+      <span>#{{ item | lowercase }}</span>
+    </div>
+  </div>
+</fieldset>
